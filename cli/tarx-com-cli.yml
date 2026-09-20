@@ -1,0 +1,94 @@
+generated: '2026-09-19'
+method: searched
+source: https://raw.githubusercontent.com/tarx-ai/tarx-cli/main/tarx (usage block) + https://docs.tarx.com/developers/cli
+docs: https://docs.tarx.com/developers/cli
+repository: https://github.com/tarx-ai/tarx-cli
+version: v1.1.0
+version_published: '2026-03-13'
+status: Public developer preview (README) — "Interfaces may change before the first stable release."
+install:
+- method: curl
+  command: curl -fsSL cli.tarx.com/install | sh
+  note: The installer is served only to a curl User-Agent; a browser is redirected to the HTML download page. It installs tarxd, the tarx script, the tarx-core + tarx-ops MCP server bundles, a launchd agent (com.tarx.daemon) and a local model.
+- method: manual
+  command: install -m 755 tarx "$HOME/.local/bin/tarx"
+  note: README quick start; expects `brew install llama.cpp` (llama-server) and Python 3.
+platforms: [macOS, Linux]
+runtime_ports:
+  '11435': Inference (Qwen 7B via llama.cpp)
+  '11436': Mesh network
+  '11437': Embeddings (nomic-embed)
+  '11438': Cognitive engine
+  '11440': Local OpenAI-compatible API + local MCP (docs.tarx.com/developers/api, /developers/mcp-openai-agents; installer health check)
+  note: Runtime services bind to 127.0.0.1 by default (SECURITY.md).
+commands:
+  runtime:
+  - command: "tarx start"
+    description: "Start all services (inference, mesh, embeddings)"
+  - command: "tarx stop"
+    description: "Graceful shutdown of all services"
+  - command: "tarx status"
+    description: "Health check all services"
+  - command: "tarx doctor"
+    description: "Diagnose issues (ports, disk, RAM, GPU, models)"
+  - command: "tarx tray"
+    description: "Launch menu bar tray icon"
+  - command: "tarx version"
+    description: "Print version"
+  inference:
+  - command: "tarx chat \"prompt\""
+    description: "Quick inference via local model"
+  - command: "tarx embed <file>"
+    description: "Chunk and embed file into RAG store"
+  - command: "tarx search \"query\""
+    description: "Semantic search across embedded files"
+  - command: "tarx route check local"
+    description: "Verify the local OpenAI-compatible inference route"
+  - command: "tarx route check remote [--offline]"
+    description: "Verify an explicitly approved remote inference route"
+  mcp:
+  - command: "tarx mcp add claude"
+    description: "Connect TARX to Claude Desktop"
+  - command: "tarx mcp add claude-code"
+    description: "Connect TARX to Claude Code (alias cc)"
+  - command: "tarx mcp add cursor"
+    description: "Connect TARX to Cursor"
+  - command: "tarx mcp add vscode"
+    description: "Connect TARX to VS Code"
+  - command: "tarx mcp status"
+    description: "Check MCP config across all clients"
+  - command: "tarx serve"
+    description: "Start the local MCP server (docs.tarx.com/developers/cli; not in the v1.1.0 usage block)"
+  spaces:
+  - command: "tarx spaces list"
+    description: "List project spaces"
+  - command: "tarx spaces create \"name\""
+    description: "Create a new project space"
+  - command: "tarx remember \"...\""
+    description: "Store approved work memory (docs.tarx.com/developers/cli; not in the v1.1.0 usage block)"
+  mesh:
+  - command: "tarx mesh status"
+    description: "Mesh network info"
+  - command: "tarx mesh join"
+    description: "Opt into mesh network (Supercomputer contribution \u2014 \"not generally live\" per we.txt)"
+  maintenance:
+  - command: "tarx update [--force] [--models]"
+    description: "Update daemon, CLI, and MCP servers in-place"
+  - command: "tarx uninstall"
+    description: "Remove TARX (asks before deleting data)"
+configuration:
+  file_example: |
+    [inference]
+    model = "tarx-local"
+    port = 11435
+  source: https://docs.tarx.com/developers/cli
+key_flows:
+- name: Install and connect an MCP client
+  steps: [curl -fsSL cli.tarx.com/install | sh, tarx doctor, tarx start, tarx mcp add claude, tarx mcp status]
+- name: Verify the inference route before trusting it
+  steps: [tarx route check local, tarx route check remote]
+  note: README calls this the "fail-closed local/remote inference preflight".
+security_policy: https://github.com/tarx-ai/tarx-cli/blob/main/SECURITY.md
+divergences:
+- The docs CLI page lists `tarx remember` and `tarx serve`, neither of which appears in the v1.1.0 script's usage block or dispatch table (start/stop/status/chat/embed/search/mesh/mcp/route/spaces/update/uninstall/version/tray/doctor).
+- The usage block's "Docs: https://tarx.com/docs" link is a 404; the live docs are at https://docs.tarx.com.

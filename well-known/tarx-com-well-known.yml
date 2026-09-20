@@ -1,0 +1,589 @@
+generated: '2026-09-19'
+method: probed
+source: live GET of the named /.well-known/ path list on every host this record knows (2026-09-19)
+hit_count: 8
+hits:
+- https://mcp.tarx.com/.well-known/oauth-authorization-server
+- https://mcp.tarx.com/.well-known/oauth-protected-resource
+- https://mcp.tarx.com/.well-known/ai-plugin.json
+- https://mcp.tarx.com/.well-known/mcp.json
+- https://tarx.com/.well-known/agent-card.json
+- https://tarx.com/.well-known/agent.json
+- https://tarx.com/.well-known/we.txt
+- https://tarx.com/llms.txt
+note: >-
+  Real discovery documents live on two hosts. mcp.tarx.com serves RFC 8414 authorization-server
+  metadata (issuer https://mcp.tarx.com, authorization_code + PKCE S256, public client, scopes
+  public/user/chatgpt_private_memory, NO registration_endpoint), RFC 9728 protected-resource metadata
+  (resource https://mcp.tarx.com/mcp, authorization_servers [https://mcp.tarx.com] — the auth server is
+  the MCP host itself, no third host), a ChatGPT-plugin-era ai-plugin.json and a non-standard
+  /.well-known/mcp.json manifest. tarx.com serves the A2A agent card at both the canonical and
+  legacy paths plus a non-standard /.well-known/we.txt (the agent "cairn"). NO host serves
+  security.txt (RFC 9116), openid-configuration, api-catalog (RFC 9727), aauth-resource.json,
+  apis.json or a Postman/UCP/ACP document. howdy/cli/app.tarx.com are one auth-gated SPA whose
+  catch-all 200s (including the negative control) are recorded as html_shell and count as misses.
+  api.tarx.com's Cloudflare edge answers 530 for anything outside /v1. WellKnown pointer emitted on
+  the real hits; no SecurityTxt pointer.
+hosts:
+- host: https://tarx.com
+  path_echo_control: passed
+  note: "Registrable domain / website / courier API host. Real 404s (HTML 404 page with a 404 status); negative control 404."
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    bytes: 1760
+    file: a2a/tarx-com-agent-card.json
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: application/json
+    bytes: 1760
+    file: a2a/tarx-com-agent-card.json
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/we.txt
+    status: 200
+    content_type: text/plain
+    bytes: 1344
+    file: well-known/tarx-com-we.txt
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    bytes: 2307
+    file: llms/tarx-com-llms.txt
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 404
+    control: true
+- host: https://www.tarx.com
+  path_echo_control: passed
+  note: "Same origin as the apex; identical answers, no redirect."
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    bytes: 1760
+    note: Identical to the tarx.com copy; not saved twice.
+  - path: /.well-known/agent.json
+    status: 200
+    content_type: application/json
+    bytes: 1760
+    note: Identical to the tarx.com copy; not saved twice.
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/we.txt
+    status: 200
+    content_type: text/plain
+    bytes: 1344
+    note: Identical to the tarx.com copy; not saved twice.
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    bytes: 2307
+    note: Identical to the tarx.com copy; not saved twice.
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 404
+    control: true
+- host: https://mcp.tarx.com
+  path_echo_control: passed
+  note: "MCP server host. JSON 404s ({\"error\":\"not_found\"}) for misses; negative control 404. Serves RFC 8414 + RFC 9728 metadata, ai-plugin.json and mcp.json."
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    bytes: 552
+    file: well-known/tarx-com-oauth-authorization-server.json
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    content_type: application/json
+    bytes: 354
+    file: well-known/tarx-com-oauth-protected-resource.json
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    content_type: application/json
+    bytes: 741
+    file: well-known/tarx-com-ai-plugin.json
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 200
+    content_type: application/json
+    bytes: 2003
+    file: well-known/tarx-com-mcp.json
+  - path: /.well-known/we.txt
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 404
+    control: true
+- host: https://api.tarx.com
+  path_echo_control: passed
+  note: "OpenAI-compatible API host behind Cloudflare. Every non-/v1 path returns Cloudflare 530 (origin error) \u2014 the origin only routes /v1/*; /v1/openapi.json is a JSON 404 from the API itself. Nothing is served under /.well-known/."
+  documents:
+  - path: /.well-known/security.txt
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /security.txt
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/openid-configuration
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/oauth-authorization-server
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/oauth-protected-resource
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/api-catalog
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/ai-plugin.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/agent-card.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/agent.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/aauth-resource.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/ucp.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/acp.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/mcp.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/we.txt
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/apis.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /apis.json
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /apis.yml
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /llms.txt
+    status: 530
+    note: Cloudflare 530 origin error
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 530
+    control: true
+    note: Cloudflare 530 origin error
+- host: https://docs.tarx.com
+  path_echo_control: passed
+  note: "Docs host (Next.js). Real 404s; negative control 404. Serves a distinct llms.txt."
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/we.txt
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    bytes: 1663
+    file: llms/tarx-com-docs-llms.txt
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 404
+    control: true
+- host: https://howdy.tarx.com
+  path_echo_control: FAILED (login-redirect catch-all answers 200 HTML for every path)
+  note: "Developer console. Every /.well-known/* path and the negative control redirect to /login?callbackUrl=... and return 200 HTML \u2014 an auth-gated SPA catch-all, so no 200 here is a document. Its /llms.txt is a served text/plain file (identical across howdy/cli/app)."
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fsecurity.txt)
+  - path: /security.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2Fsecurity.txt)
+  - path: /.well-known/openid-configuration
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fopenid-configuration)
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Foauth-authorization-server)
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Foauth-protected-resource)
+  - path: /.well-known/api-catalog
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fapi-catalog)
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fai-plugin.json)
+  - path: /.well-known/agent-card.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fagent-card.json)
+  - path: /.well-known/agent.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fagent.json)
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Faauth-resource.json)
+  - path: /.well-known/ucp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fucp.json)
+  - path: /.well-known/acp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Facp.json)
+  - path: /.well-known/mcp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fmcp.json)
+  - path: /.well-known/we.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fwe.txt)
+  - path: /.well-known/apis.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Fapis.json)
+  - path: /apis.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2Fapis.json)
+  - path: /apis.yml
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2Fapis.yml)
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    bytes: 5048
+    file: llms/tarx-com-howdy-llms.txt
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 200
+    control: true
+    document: false
+    note: HTML shell, not a document (redirected to https://howdy.tarx.com/login?callbackUrl=%2F.well-known%2Ftarx-com-negative-control-4e9d1b7a.json)
+- host: https://cli.tarx.com
+  path_echo_control: FAILED (login-redirect catch-all answers 200 HTML for every path)
+  note: "Same application as howdy.tarx.com (same deployment id); same login catch-all."
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fsecurity.txt)
+  - path: /security.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2Fsecurity.txt)
+  - path: /.well-known/openid-configuration
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fopenid-configuration)
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Foauth-authorization-server)
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Foauth-protected-resource)
+  - path: /.well-known/api-catalog
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fapi-catalog)
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fai-plugin.json)
+  - path: /.well-known/agent-card.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fagent-card.json)
+  - path: /.well-known/agent.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fagent.json)
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Faauth-resource.json)
+  - path: /.well-known/ucp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fucp.json)
+  - path: /.well-known/acp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Facp.json)
+  - path: /.well-known/mcp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fmcp.json)
+  - path: /.well-known/we.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fwe.txt)
+  - path: /.well-known/apis.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Fapis.json)
+  - path: /apis.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2Fapis.json)
+  - path: /apis.yml
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2Fapis.yml)
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    bytes: 5048
+    note: Identical to llms/tarx-com-howdy-llms.txt; not saved twice.
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 200
+    control: true
+    document: false
+    note: HTML shell, not a document (redirected to https://cli.tarx.com/login?callbackUrl=%2F.well-known%2Ftarx-com-negative-control-4e9d1b7a.json)
+- host: https://app.tarx.com
+  path_echo_control: FAILED (login-redirect catch-all answers 200 HTML for every path)
+  note: "Same application as howdy.tarx.com; same login catch-all."
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fsecurity.txt)
+  - path: /security.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2Fsecurity.txt)
+  - path: /.well-known/openid-configuration
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fopenid-configuration)
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Foauth-authorization-server)
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Foauth-protected-resource)
+  - path: /.well-known/api-catalog
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fapi-catalog)
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fai-plugin.json)
+  - path: /.well-known/agent-card.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fagent-card.json)
+  - path: /.well-known/agent.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fagent.json)
+  - path: /.well-known/aauth-resource.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Faauth-resource.json)
+  - path: /.well-known/ucp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fucp.json)
+  - path: /.well-known/acp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Facp.json)
+  - path: /.well-known/mcp.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fmcp.json)
+  - path: /.well-known/we.txt
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fwe.txt)
+  - path: /.well-known/apis.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Fapis.json)
+  - path: /apis.json
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2Fapis.json)
+  - path: /apis.yml
+    status: 200
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2Fapis.yml)
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    bytes: 5048
+    note: Identical to llms/tarx-com-howdy-llms.txt; not saved twice.
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 200
+    control: true
+    document: false
+    note: HTML shell, not a document (redirected to https://app.tarx.com/login?callbackUrl=%2F.well-known%2Ftarx-com-negative-control-4e9d1b7a.json)
+- host: https://hq.tarx.com
+  path_echo_control: passed
+  note: "Internal HQ app (root redirects to /login). Real 404s for every path."
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+  - path: /.well-known/ucp.json
+    status: 404
+  - path: /.well-known/acp.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+  - path: /.well-known/we.txt
+    status: 404
+  - path: /.well-known/apis.json
+    status: 404
+  - path: /apis.json
+    status: 404
+  - path: /apis.yml
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /.well-known/tarx-com-negative-control-4e9d1b7a.json
+    status: 404
+    control: true

@@ -1,0 +1,26 @@
+generated: '2026-09-19'
+method: probed
+source: https://mcp.tarx.com/.well-known/oauth-authorization-server (scopes_supported) + https://mcp.tarx.com/.well-known/oauth-protected-resource
+docs: null
+issuer: https://mcp.tarx.com
+resource: https://mcp.tarx.com/mcp
+note: >-
+  The scope names come verbatim from the provider's RFC 8414 / RFC 9728 metadata. No scopes reference
+  page was found on docs.tarx.com or howdy.tarx.com, so descriptions are recorded only where a
+  provider document states the meaning; the rest are null rather than guessed. ai-plugin.json
+  requests scope "user" for the ChatGPT connector.
+scope_count: 3
+scopes:
+- name: public
+  description: null
+  evidence: Named in scopes_supported. The anonymous MCP surface (public-safe tools, tarx://system resources) is what the provider calls "public context" in mcp.json.
+- name: user
+  description: null
+  evidence: Named in scopes_supported; requested by /.well-known/ai-plugin.json (auth.scope "user") for the ChatGPT connector.
+- name: chatgpt_private_memory
+  description: null
+  evidence: Named in scopes_supported. mcp.json describes "private memory reads and writes require OAuth/Bearer auth" and names ChatGPT as a target client; the scope name pairs the two, but no document defines it.
+tool_gating_observed:
+- {tool: tarx_memory_search, anonymous: denied, message: Authentication required for private memory reads. Provide a Bearer token.}
+- {tool: tarx_status, anonymous: allowed}
+- {tool: tarx_skills_list, anonymous: allowed}

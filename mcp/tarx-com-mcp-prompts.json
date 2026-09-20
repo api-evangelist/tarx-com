@@ -1,0 +1,40 @@
+{
+  "result": {
+    "prompts": [
+      {
+        "name": "tarx_session_start",
+        "title": "TARX Session Start",
+        "description": "Initialize a TARX-aware session with tools overview and behavior rules."
+      },
+      {
+        "name": "tarx-quickstart",
+        "title": "TARX Quickstart",
+        "description": "Walk through getting TARX running from zero. Checks status, installs if needed, shows available skills."
+      },
+      {
+        "name": "tarx-explore-skills",
+        "title": "Explore TARX Skills",
+        "description": "Discover TARX skills relevant to a specific topic or domain.",
+        "arguments": [
+          {
+            "name": "topic",
+            "description": "The topic or domain to explore (e.g., \"code review\", \"data analysis\", \"testing\")",
+            "required": false
+          }
+        ]
+      },
+      {
+        "name": "tarx-join-mesh",
+        "title": "Join TARX Mesh",
+        "description": "Guide for permissioned Supercomputer contribution setup. Off by default."
+      },
+      {
+        "name": "tarx-enterprise",
+        "title": "TARX Enterprise",
+        "description": "Learn about TARX for organizations \u2014 sovereign AI, deployment options, and pricing."
+      }
+    ]
+  },
+  "jsonrpc": "2.0",
+  "id": 1
+}

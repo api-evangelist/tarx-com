@@ -1,0 +1,90 @@
+generated: '2026-09-19'
+method: searched
+source: https://docs.tarx.com/developers/api, /developers/mcp, /developers/safety-approval-gates, /developers/partner-sandbox; observed headers on api.tarx.com and mcp.tarx.com (2026-09-19)
+authentication:
+  style: Bearer API key on api.tarx.com; OAuth 2.0 authorization_code + PKCE on mcp.tarx.com (anonymous for public-safe tools); none on tarx.com/api courier endpoints
+  file: authentication/tarx-com-authentication.yml
+idempotency:
+  coverage: none
+  header: null
+  scope: []
+  retention: null
+  note: >-
+    No Idempotency-Key or equivalent replay protection is documented for POST /v1/chat/completions,
+    POST /api/souls, POST /api/souls/:id/touch or any MCP write tool. The MCP server annotates its
+    READ tools idempotentHint: true (search, fetch, tarx_status, tarx_skills_list, ...) and leaves the
+    write tools (tarx_memory_store, tarx_session, tarx_waitlist) without the hint. The provider's
+    tarx-examples adapter contract says every invoke carries "an idempotency key", but the README
+    states those routes are not publicly deployed, so that is a design intent and not a surface.
+pagination:
+  style: none
+  params: {limit: 'MCP search tool only, 1-20, default 8'}
+  response_fields: []
+  note: No cursor/offset convention is published for any REST surface.
+field_expansion: {supported: false}
+sparse_fields: {supported: false}
+metadata: {supported: false}
+request_tracing:
+  header: X-Request-ID
+  echoed_in_body: request_id (api.tarx.com error envelope, req_<uuid>)
+  cors_exposed: [X-Request-ID, Retry-After]
+  mcp_session_header: mcp-session-id (exposed via CORS)
+versioning:
+  style: URL path (/v1) on api.tarx.com; semver serverInfo on MCP
+  file: lifecycle/tarx-com-lifecycle.yml
+error_envelope:
+  shape: "OpenAI-style {error: {message, type, param, code}, request_id} on api.tarx.com; JSON-RPC 2.0 on MCP"
+  file: errors/tarx-com-problem-types.yml
+rate_limit_signaling:
+  headers_observed: []
+  headers_declared: [Retry-After (in Access-Control-Expose-Headers on api.tarx.com)]
+  file: rate-limits/tarx-com-rate-limits.yml
+content_types:
+  api_tarx_com: application/json
+  mcp: application/json request; text/event-stream response (streamable HTTP; a GET without the Accept pair is 406)
+  courier: application/json (GET), text/plain (we.txt), text/markdown (skill.md, courier.md)
+dry_run_mode:
+  status: none
+  note: >-
+    No dry-run/test flag exists. The provider's stated substitute is a proposal -> approval -> evidence
+    loop: "TARX should ask before important actions and show blockers when approval is missing"
+    (docs.tarx.com/developers/safety-approval-gates) and the MCP Actions tool area "Propose work that
+    may require review" — an approval gate rather than a rehearsal mode.
+approval_gates:
+  source: https://docs.tarx.com/developers/safety-approval-gates
+  actions:
+  - {action: Local Code Worker run, gate: User clicks approval control}
+  - {action: Patch apply, gate: Explicit apply approval after proposal review}
+  - {action: QA commands, gate: Explicit command list and captured output}
+  - {action: Terminal/commands, gate: Approval and scoped command policy}
+  - {action: Vault/secret extraction, gate: Explicit approval; never print secret values}
+  - {action: External sends or deletes, gate: Explicit approval and evidence}
+reversibility:
+  status: none
+  write_surfaces:
+  - operation: POST /api/souls (author a Soul)
+    reversal: null
+    window: null
+    note: 'No delete/undo is documented. Expiry is automatic: "Letter expires in 72 hours. Key lives 30 days after last touch." (skill.md) — a TTL, not a reversal an agent can invoke.'
+  - operation: POST /api/souls/:id/touch
+    reversal: null
+    window: null
+  - operation: tarx_memory_store (MCP, auth-gated)
+    reversal: null
+    window: null
+    note: Optional ttl_days argument sets expiry at write time; no delete tool is exposed in the anonymous tools/list.
+  - operation: tarx_session (MCP, auth-gated)
+    reversal: null
+    window: null
+  - operation: tarx_waitlist (MCP)
+    reversal: null
+    window: null
+    note: Joins the early-access waitlist, optionally with an email; no unsubscribe operation is exposed.
+  - operation: POST /v1/chat/completions
+    reversal: not-applicable
+    note: Inference call; nothing to reverse.
+  account_data: '"You can request export or deletion of account data by contacting TARX." (https://tarx.com/terms) — a human channel, not an API operation.'
+  grade_basis: No reversal operation and no stated window for any write surface, so reversibility is recorded as none rather than documented.
+webhooks:
+  documented: false
+  source: https://docs.tarx.com/developers/partner-sandbox

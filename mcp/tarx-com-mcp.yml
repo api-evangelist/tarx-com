@@ -1,0 +1,315 @@
+generated: '2026-09-19'
+method: probed
+status: published
+source: https://mcp.tarx.com/mcp
+server:
+  name: tarx
+  version: 3.18.0
+  transport: streamable-http
+  url: https://mcp.tarx.com/mcp
+  protocol_version: '2025-06-18'
+  server_capabilities:
+    tools: {listChanged: true}
+    prompts: {listChanged: true}
+    resources: {listChanged: true}
+deployment:
+  mode: both
+  endpoint: https://mcp.tarx.com/mcp
+  install: "curl -fsSL cli.tarx.com/install | sh && tarx mcp add claude"
+  package: https://github.com/tarx-ai/tarx-cli
+  auth: oauth
+  verified: probed
+  checked: '2026-09-19'
+  note: >-
+    REMOTE: an anonymous POST of initialize and tools/list to https://mcp.tarx.com/mcp answered 200
+    (text/event-stream) with serverInfo {name: tarx, version: 3.18.0} and 22 tools carrying full
+    inputSchema, annotations and (for search/fetch) outputSchema. Public-safe tools (tarx_status,
+    tarx_skills_list, resources/read on tarx://system/*) execute without credentials; a private tool
+    (tarx_memory_search) answers "Authentication required for private memory reads. Provide a Bearer
+    token." The provider's own /.well-known/mcp.json states auth.required: false with private memory
+    behind OAuth/Bearer, so auth is recorded as oauth (optional for the public subset). LOCAL: the
+    documented local MCP is installed by the TARX CLI (tarx-core + tarx-ops server bundles from the
+    tarx-cli GitHub releases, wired into Claude Desktop / Claude Code / Cursor / VS Code by `tarx mcp
+    add <target>`; `tarx serve` starts the local MCP server per docs.tarx.com/developers/cli).
+    docs.tarx.com/developers/mcp ALSO documents `npx @tarx/mcp` as the local server command, but
+    registry.npmjs.org/@tarx%2Fmcp returned 404 and an npm scope search for tarx returned zero
+    packages on 2026-09-19, so that documented package is not published; the CLI path is the one that
+    ships. The install one-liner is served as a shell script only to a curl User-Agent
+    (cli.tarx.com/install -> text/plain script; a browser UA is redirected to the HTML
+    cli.tarx.com/download page), and the variant `curl -fsSL https://tarx.com/install | sh` printed on
+    cli.tarx.com/download and docs.tarx.com/users/install returns a 404 HTML page on tarx.com.
+discovery:
+  well_known_mcp_json: https://mcp.tarx.com/.well-known/mcp.json
+  oauth_protected_resource: https://mcp.tarx.com/.well-known/oauth-protected-resource
+  oauth_authorization_server: https://mcp.tarx.com/.well-known/oauth-authorization-server
+  ai_plugin: https://mcp.tarx.com/.well-known/ai-plugin.json
+  openai_tools_export: https://mcp.tarx.com/openai-tools
+  docs: https://docs.tarx.com/developers/mcp
+  console: https://howdy.tarx.com/mcp
+  agent_card_url_points_here: true
+  note: >-
+    The A2A agent card at tarx.com/.well-known/agent-card.json declares url https://mcp.tarx.com/mcp —
+    the card's endpoint IS this MCP server. An A2A-shaped JSON-RPC call (tasks/get) to that URL
+    returns MCP's -32601 Method not found, so there is no separate A2A JSON-RPC responder (see
+    a2a/tarx-com-a2a.yml). The provider's mcp.json advertises 46 tools / 10 resources including the
+    private set; the anonymous tools/list exposes 22 tools, 5 prompts and 5 resources, which is what
+    is recorded here. openai-tools (mcp/tarx-com-openai-tools.json) is a 4-function OpenAI
+    function-calling export of the same server (tarx_status, tarx_memory_store, tarx_memory_search,
+    tarx_context).
+authorship: provider
+authorship_note: >-
+  22 provider-specific tool names (tarx_*, search/fetch shaped for the OpenAI connector) with
+  hand-written descriptions naming TARX runtime concepts (Computer, Supercomputer, Vault, Spaces);
+  not a docs-platform default.
+tools_count: 22
+tools_read_only: 19
+tools_source: live tools/list at https://mcp.tarx.com/mcp on 2026-09-19, saved verbatim to mcp/tarx-com-mcp-tools.json
+tools:
+- name: search
+  title: "Search TARX Context"
+  description: "Search read-only TARX context, approved memory, connector strategy, and TARX privacy-workflow rules. Use this first, then call fetch with a returned id for the full record."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["query", "limit"]
+  input_required: ["query"]
+  has_output_schema: true
+- name: fetch
+  title: "Fetch TARX Context"
+  description: "Fetch one full TARX context record returned by search. This is read-only and safe for OpenAI context retrieval, including TARX privacy and secure-workflow guidance."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["id"]
+  input_required: ["id"]
+  has_output_schema: true
+- name: tarx_status
+  title: "TARX Status"
+  description: "Check whether the approved TARX runtime boundary is reachable for this session. Remote MCP returns public-safe status only; private files, secrets, device context, and local tools require a local TARX runtime, authentication, and explicit permission."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: []
+  input_required: []
+  has_output_schema: false
+- name: tarx_skills_list
+  title: "TARX Skills List"
+  description: "List approved TARX public capability summaries available to this MCP session. Private/local skills, files, secrets, memory, device context, and local tools require a local TARX runtime, authentication, and explicit permission."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: []
+  input_required: []
+  has_output_schema: false
+- name: tarx_install
+  title: "TARX Install"
+  description: "Get TARX installation instructions for a specific platform and mode. Call when a user wants to install TARX or asks how to get started. Returns the exact install command, file size, verification steps, and post-install checklist. Args: platform (macos/linux/windows/auto), mode (local/workbench/full)."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["platform", "mode"]
+  input_required: []
+  has_output_schema: false
+- name: tarx_install_guide
+  title: "TARX Install Guide"
+  description: "Get step-by-step TARX installation instructions for a specific platform. Call when a user asks how to install TARX, run TARX, or get started. Returns the exact install command, system requirements, file size, and first-run instructions including optional workbench IDE."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["platform"]
+  input_required: []
+  has_output_schema: false
+- name: tarx_health
+  title: "TARX Health"
+  description: "Check whether approved TARX runtime routes are available. Remote MCP returns public-safe status; local/private runtime diagnostics require an installed TARX runtime and permission. Alias: tarx_run."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["check", "services"]
+  input_required: []
+  has_output_schema: false
+- name: tarx_context
+  title: "TARX Context"
+  description: "Load a public-safe TARX context brief for a compatible MCP client. Remote MCP can return approved product, route, and workflow context; private project files, local runtime config, secrets, and device context require local TARX runtime permission."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["session_id", "github_repo", "project_config"]
+  input_required: []
+  has_output_schema: false
+- name: tarx_git_context
+  title: "TARX Git Context"
+  description: "Get latest commit info for TARX repos via GitHub API. Call when you need to know what changed recently or need to reference recent work. Returns branch, last 15 commit SHAs, messages, dates, and authors for each active repo."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: true
+  input_properties: ["repo"]
+  input_required: []
+  has_output_schema: false
+- name: tarx_sprint
+  title: "TARX Sprint"
+  description: "Get current sprint priorities (P0 and P1 items). Call when deciding what to work on next or when a user asks about current priorities. Returns the active ship plan items with status, owner, urgency, and scope."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: []
+  input_required: []
+  has_output_schema: false
+- name: tarx_files
+  title: "TARX Files"
+  description: "Read source files from a GitHub repo. Call after tarx_context to read key_files, or whenever you need to see actual code. Pass github_repo and relative file paths. Never invent file contents \u2014 use this for ground truth. Returns file contents or error if path does not exist."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: true
+  input_properties: ["github_repo", "files", "key_files"]
+  input_required: ["files"]
+  has_output_schema: false
+- name: github_list_repos
+  title: "GitHub List Repos"
+  description: "List GitHub repos. Public read via token or pass pat for private. First-class GitHub plugin tool. Call after tarx_context for project repos."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: true
+  input_properties: ["pat", "per_page"]
+  input_required: []
+  has_output_schema: false
+- name: github_import_space
+  title: "GitHub Import Space"
+  description: "Generate TARX space import proposal for a GitHub repo. Returns remote details + suggested files. Use to bootstrap local or remote context. Plugin tool."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: true
+  input_properties: ["full_name", "pat"]
+  input_required: ["full_name"]
+  has_output_schema: false
+- name: tarx_init
+  title: "TARX Init"
+  description: "Scan a public GitHub repo to suggest TARX project setup. Remote MCP does not read local files or local runtime state. Local MCP/private setup requires an installed TARX runtime, authentication, and explicit permission."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: true
+  input_properties: ["github_repo", "name"]
+  input_required: ["github_repo"]
+  has_output_schema: false
+- name: tarx_download
+  title: "TARX Download"
+  description: "Get the TARX download link for the user's platform. Call when a user wants to install TARX or asks how to get started. Returns a direct download URL, file size, version, SHA256 checksum, and install script command for the detected platform."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["platform"]
+  input_required: []
+  has_output_schema: false
+- name: tarx_memory_store
+  title: "TARX Memory Store"
+  description: "Persist user-approved work context such as decisions, preferences, and project notes. Remote MCP memory is auth-bounded and must not be used for passwords, API keys, tokens, files, or raw secrets. Local/private memory requires local TARX runtime permission."
+  read_only_hint: false
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["key", "value", "tags", "ttl_days"]
+  input_required: ["key", "value"]
+  has_output_schema: false
+- name: tarx_memory_search
+  title: "TARX Memory Search"
+  description: "Search user-approved TARX work context for this authenticated session. Remote MCP cannot read local private files, secrets, device context, or unauthenticated local memory."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["query", "limit", "tags"]
+  input_required: ["query"]
+  has_output_schema: false
+- name: tarx_session
+  title: "TARX Session"
+  description: "Manage named work sessions for this authenticated TARX boundary. Private local sessions require a local TARX runtime and permission."
+  read_only_hint: false
+  idempotent_hint: false
+  open_world_hint: false
+  input_properties: ["action", "name", "session_id"]
+  input_required: ["action"]
+  has_output_schema: false
+- name: tarx_upgrade
+  title: "TARX Upgrade"
+  description: "Check for TARX Local update guidance. Call when a user asks if TARX is up to date or wants to upgrade. Returns public-safe update guidance without exposing internal local runtime details."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: true
+  input_properties: ["check_only"]
+  input_required: []
+  has_output_schema: false
+- name: tarx_waitlist
+  title: "TARX Waitlist"
+  description: "Join the TARX early access waitlist. Optionally capture email for priority access."
+  read_only_hint: false
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: ["email"]
+  input_required: []
+  has_output_schema: false
+- name: tarx_resolve_url
+  title: "TARX Resolve URL"
+  description: "Resolve any tarx.com URL to its full content. Call when you see a tarx.com link \u2014 dispatches, learn articles, docs, and other pages are fetched and returned as markdown. Supports /dispatches/*, /learn/*, /docs/*, /developers, /download, /api-access, and the homepage."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: true
+  input_properties: ["url"]
+  input_required: ["url"]
+  has_output_schema: false
+- name: tarx_onboard
+  title: "TARX Onboard"
+  description: "Self-aligning bootstrap for any AI system connecting to TARX via MCP. Call this FIRST in any new session. Returns identity brief, tool graph with chaining rules, memory conventions, example session flows, and persona alignment \u2014 so you know how to be a good TARX client without prior training. No arguments needed."
+  read_only_hint: true
+  idempotent_hint: true
+  open_world_hint: false
+  input_properties: []
+  input_required: []
+  has_output_schema: false
+
+prompts_count: 5
+prompts_source: live prompts/list, saved verbatim to mcp/tarx-com-mcp-prompts.json
+prompts:
+- name: tarx_session_start
+  title: "TARX Session Start"
+  description: "Initialize a TARX-aware session with tools overview and behavior rules."
+- name: tarx-quickstart
+  title: "TARX Quickstart"
+  description: "Walk through getting TARX running from zero. Checks status, installs if needed, shows available skills."
+- name: tarx-explore-skills
+  title: "Explore TARX Skills"
+  description: "Discover TARX skills relevant to a specific topic or domain."
+- name: tarx-join-mesh
+  title: "Join TARX Mesh"
+  description: "Guide for permissioned Supercomputer contribution setup. Off by default."
+- name: tarx-enterprise
+  title: "TARX Enterprise"
+  description: "Learn about TARX for organizations \u2014 sovereign AI, deployment options, and pricing."
+
+resources_count: 5
+resources_source: live resources/list, saved verbatim to mcp/tarx-com-mcp-resources.json
+resources:
+- name: session-brief
+  uri: tarx://prompts/session-start
+  description: "Live session brief \u2014 tools, protocol, identity."
+- name: architecture
+  uri: tarx://system/architecture
+  description: "TARX public-safe system architecture and route boundaries."
+- name: tool-inventory
+  uri: tarx://system/tools
+  description: "TARX approved MCP capability boundary. Exact local inventory requires local install/auth/permission."
+- name: deploy-config
+  uri: tarx://system/deploy
+  description: "Deployment configuration \u2014 Vercel projects, domains."
+- name: protocol
+  uri: tarx://system/protocol
+  description: "Session protocol \u2014 rules for Claude sessions using TARX."
+
+files:
+  tools: mcp/tarx-com-mcp-tools.json
+  prompts: mcp/tarx-com-mcp-prompts.json
+  resources: mcp/tarx-com-mcp-resources.json
+  openai_tools: mcp/tarx-com-openai-tools.json
+  well_known_manifest: well-known/tarx-com-mcp.json
+crosswalk: >-
+  No ToolCrosswalk is emitted: the provider publishes no OpenAPI (see conformance/ and apis.yml
+  notes), so there is no REST operationId to bind these tools to. The only public REST surfaces
+  (api.tarx.com/v1 OpenAI-compatible chat + models; tarx.com/api courier/souls/census) are documented
+  in prose and observed responses only.

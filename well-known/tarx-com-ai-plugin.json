@@ -1,0 +1,21 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "TARX",
+  "name_for_model": "tarx",
+  "description_for_human": "Private, local-first memory for ChatGPT.",
+  "description_for_model": "Use TARX for public TARX context, user-approved private memory, and vault-first routing for secrets.",
+  "auth": {
+    "type": "oauth",
+    "client_url": "https://mcp.tarx.com/oauth/authorize",
+    "authorization_url": "https://mcp.tarx.com/oauth/token",
+    "scope": "user",
+    "authorization_content_type": "application/json"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://mcp.tarx.com/openai-tools"
+  },
+  "logo_url": "https://mcp.tarx.com/tarx-desktop-icon.png",
+  "contact_email": "howdy@tarx.com",
+  "legal_info_url": "https://tarx.com"
+}

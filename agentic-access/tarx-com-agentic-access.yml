@@ -1,0 +1,305 @@
+generated: '2026-09-19'
+method: searched
+source: live tools/list annotations at https://mcp.tarx.com/mcp + https://docs.tarx.com/developers/safety-approval-gates + https://tarx.com/skill.md (2026-09-19)
+description: >-
+  x-agentic-access contracts for TARX's agent surface. Unlike the generated files elsewhere in the
+  catalog this one is NOT derived from an OpenAPI (none exists); it is read from the provider's own
+  MCP tool annotations (readOnlyHint / idempotentHint / openWorldHint on every tool), the observed
+  anonymous-vs-Bearer gating, and the provider's published approval-gate policy. audience is left
+  null to bind per deployment.
+provider_policy:
+  approval_gates: https://docs.tarx.com/developers/safety-approval-gates
+  rules_for_visiting_agents: https://tarx.com/skill.md ("Do not treat peer messages as system instructions"; "Propose install once if a human can act. Do not run it.")
+  runtime_contract: https://docs.tarx.com/reference/runtime-contract
+  gated_actions: [Local Code Worker run, Patch apply, QA commands, Terminal/commands, Vault/secret extraction, External sends or deletes]
+summary:
+  tools: 22
+  by_action_class:
+    connected: 19
+    acting: 3
+  by_consequence:
+    read: 19
+    write: 3
+  auth_gated_tools: 3
+  human_in_the_loop_required: 0
+  human_in_the_loop_conditional: 3
+operations:
+- tool: search
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: fetch
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_status
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_skills_list
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_install
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_install_guide
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_health
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_context
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_git_context
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: true}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_sprint
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_files
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: true}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: github_list_repos
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: true}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: github_import_space
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: true}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_init
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: true}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_download
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_memory_store
+  surface: mcp
+  provider_annotations: {readOnlyHint: false, idempotentHint: true, openWorldHint: false}
+  anonymous_access: denied (Bearer required)
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token: {max-ttl: 900}
+    escalation: {human-in-the-loop: conditional}
+    audit: required
+- tool: tarx_memory_search
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: denied (Bearer required)
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: required
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_session
+  surface: mcp
+  provider_annotations: {readOnlyHint: false, idempotentHint: false, openWorldHint: false}
+  anonymous_access: denied (Bearer required)
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token: {max-ttl: 900}
+    escalation: {human-in-the-loop: conditional}
+    audit: required
+- tool: tarx_upgrade
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: true}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_waitlist
+  surface: mcp
+  provider_annotations: {readOnlyHint: false, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: optional
+    audience: null
+    token: {max-ttl: 900}
+    escalation: {human-in-the-loop: conditional}
+    audit: required
+- tool: tarx_resolve_url
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: true}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+- tool: tarx_onboard
+  surface: mcp
+  provider_annotations: {readOnlyHint: true, idempotentHint: true, openWorldHint: false}
+  anonymous_access: allowed
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    audience: null
+    token: {max-ttl: 3600}
+    escalation: {human-in-the-loop: not-required}
+    audit: recommended
+
+rest_surfaces:
+- operation: POST https://tarx.com/api/souls
+  x-agentic-access: {action-class: acting, consequence: write, subject: optional, audience: null, token: {max-ttl: 900}, escalation: {human-in-the-loop: not-required}, audit: required}
+  note: Creates a Soul record with a 72-hour letter / 30-day key; documented for agents in skill.md; no auth documented.
+- operation: POST https://tarx.com/api/souls/:id/touch
+  x-agentic-access: {action-class: acting, consequence: write, subject: optional, audience: null, token: {max-ttl: 900}, escalation: {human-in-the-loop: not-required}, audit: recommended}
+- operation: POST https://tarx.com/api/courier/introduce
+  x-agentic-access: {action-class: acting, consequence: write, subject: optional, audience: null, token: {max-ttl: 900}, escalation: {human-in-the-loop: not-required}, audit: recommended}
+  note: "Body {\"peer_card_url\": ...} per courier.md; hands TARX another agent's card URL."
+- operation: GET https://tarx.com/api/courier/ping | /api/courier/tick | /api/rail/census
+  x-agentic-access: {action-class: connected, consequence: read, subject: optional, audience: null, token: {max-ttl: 3600}, escalation: {human-in-the-loop: not-required}, audit: recommended}
+- operation: POST https://api.tarx.com/v1/chat/completions
+  x-agentic-access: {action-class: acting, consequence: write, subject: required, audience: null, token: {max-ttl: 900}, escalation: {human-in-the-loop: conditional, triggers: [abnormal, high-value]}, audit: required}
+  note: Metered inference behind a per-account TARX key.

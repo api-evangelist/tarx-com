@@ -1,0 +1,804 @@
+{
+  "result": {
+    "tools": [
+      {
+        "name": "search",
+        "title": "Search TARX Context",
+        "description": "Search read-only TARX context, approved memory, connector strategy, and TARX privacy-workflow rules. Use this first, then call fetch with a returned id for the full record.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Search query for TARX context. Examples: positioning, marketing, OpenAI connector, local memory."
+            },
+            "limit": {
+              "description": "Maximum results to return, 1-20. Default: 8.",
+              "type": "number"
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "metadata": {
+                    "type": "object",
+                    "propertyNames": {
+                      "type": "string"
+                    },
+                    "additionalProperties": {}
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "text",
+                  "url"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "results"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "fetch",
+        "title": "Fetch TARX Context",
+        "description": "Fetch one full TARX context record returned by search. This is read-only and safe for OpenAI context retrieval, including TARX privacy and secure-workflow guidance.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "A result id returned by search, such as tarx:overview or memory:project:decision."
+            }
+          },
+          "required": [
+            "id"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        },
+        "outputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "text": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "metadata": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {}
+            }
+          },
+          "required": [
+            "id",
+            "title",
+            "text",
+            "url"
+          ],
+          "additionalProperties": false
+        }
+      },
+      {
+        "name": "tarx_status",
+        "title": "TARX Status",
+        "description": "Check whether the approved TARX runtime boundary is reachable for this session. Remote MCP returns public-safe status only; private files, secrets, device context, and local tools require a local TARX runtime, authentication, and explicit permission.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_skills_list",
+        "title": "TARX Skills List",
+        "description": "List approved TARX public capability summaries available to this MCP session. Private/local skills, files, secrets, memory, device context, and local tools require a local TARX runtime, authentication, and explicit permission.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_install",
+        "title": "TARX Install",
+        "description": "Get TARX installation instructions for a specific platform and mode. Call when a user wants to install TARX or asks how to get started. Returns the exact install command, file size, verification steps, and post-install checklist. Args: platform (macos/linux/windows/auto), mode (local/workbench/full).",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "platform": {
+              "description": "Target platform (default: auto)",
+              "type": "string",
+              "enum": [
+                "macos",
+                "linux",
+                "windows",
+                "auto"
+              ]
+            },
+            "mode": {
+              "description": "Install mode (default: local). \"daemon\" is an alias for \"local\".",
+              "type": "string",
+              "enum": [
+                "local",
+                "daemon",
+                "workbench",
+                "full"
+              ]
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_install_guide",
+        "title": "TARX Install Guide",
+        "description": "Get step-by-step TARX installation instructions for a specific platform. Call when a user asks how to install TARX, run TARX, or get started. Returns the exact install command, system requirements, file size, and first-run instructions including optional workbench IDE.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "platform": {
+              "description": "Target OS. Options: macos, windows, linux. Auto-detect from user context if possible.",
+              "type": "string",
+              "enum": [
+                "macos",
+                "linux",
+                "windows",
+                "auto"
+              ]
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_health",
+        "title": "TARX Health",
+        "description": "Check whether approved TARX runtime routes are available. Remote MCP returns public-safe status; local/private runtime diagnostics require an installed TARX runtime and permission. Alias: tarx_run.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "check": {
+              "description": "Which TARX service to check (default: all)",
+              "type": "string",
+              "enum": [
+                "all",
+                "inference",
+                "mesh",
+                "embeddings",
+                "cognitive"
+              ]
+            },
+            "services": {
+              "description": "Project services from ~/.tarx/project.json to also check",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "port": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "name",
+                  "port"
+                ]
+              }
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_context",
+        "title": "TARX Context",
+        "description": "Load a public-safe TARX context brief for a compatible MCP client. Remote MCP can return approved product, route, and workflow context; private project files, local runtime config, secrets, and device context require local TARX runtime permission.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "session_id": {
+              "description": "Optional session ID (auto-generated if omitted)",
+              "type": "string"
+            },
+            "github_repo": {
+              "description": "GitHub repo (owner/name) for project context. Omit for TARX defaults.",
+              "type": "string"
+            },
+            "project_config": {
+              "description": "Contents of ~/.tarx/project.json \u2014 pass to ground the session in your project",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "framework": {
+                  "type": "string"
+                },
+                "roots": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                },
+                "key_files": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "path": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "path"
+                    ]
+                  }
+                },
+                "services": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "port": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "port"
+                    ]
+                  }
+                },
+                "integrations": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
+                  "additionalProperties": {}
+                }
+              }
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_git_context",
+        "title": "TARX Git Context",
+        "description": "Get latest commit info for TARX repos via GitHub API. Call when you need to know what changed recently or need to reference recent work. Returns branch, last 15 commit SHAs, messages, dates, and authors for each active repo.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "repo": {
+              "description": "Which repo to check (default: all)",
+              "type": "string",
+              "enum": [
+                "web",
+                "workbench",
+                "mcp",
+                "all"
+              ]
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_sprint",
+        "title": "TARX Sprint",
+        "description": "Get current sprint priorities (P0 and P1 items). Call when deciding what to work on next or when a user asks about current priorities. Returns the active ship plan items with status, owner, urgency, and scope.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_files",
+        "title": "TARX Files",
+        "description": "Read source files from a GitHub repo. Call after tarx_context to read key_files, or whenever you need to see actual code. Pass github_repo and relative file paths. Never invent file contents \u2014 use this for ground truth. Returns file contents or error if path does not exist.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "github_repo": {
+              "description": "GitHub repo (owner/name). Defaults to tarx-ai/tarx-web.",
+              "type": "string"
+            },
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "File paths or shortnames. Paths like \"app/layout.tsx\" fetch directly. Shortnames like \"layout\" resolve via key_files config."
+            },
+            "key_files": {
+              "description": "key_files from ~/.tarx/project.json \u2014 used to resolve shortnames to paths",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name",
+                  "path"
+                ]
+              }
+            }
+          },
+          "required": [
+            "files"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "github_list_repos",
+        "title": "GitHub List Repos",
+        "description": "List GitHub repos. Public read via token or pass pat for private. First-class GitHub plugin tool. Call after tarx_context for project repos.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "pat": {
+              "description": "Optional PAT for private repos. Omit for public.",
+              "type": "string"
+            },
+            "per_page": {
+              "default": 30,
+              "type": "number"
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "github_import_space",
+        "title": "GitHub Import Space",
+        "description": "Generate TARX space import proposal for a GitHub repo. Returns remote details + suggested files. Use to bootstrap local or remote context. Plugin tool.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "full_name": {
+              "type": "string",
+              "description": "owner/repo"
+            },
+            "pat": {
+              "description": "Optional PAT if private repo.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "full_name"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_init",
+        "title": "TARX Init",
+        "description": "Scan a public GitHub repo to suggest TARX project setup. Remote MCP does not read local files or local runtime state. Local MCP/private setup requires an installed TARX runtime, authentication, and explicit permission.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "github_repo": {
+              "type": "string",
+              "description": "GitHub repo to scan (owner/name, e.g. \"vercel/next.js\")"
+            },
+            "name": {
+              "description": "Project name (defaults to repo name)",
+              "type": "string"
+            }
+          },
+          "required": [
+            "github_repo"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_download",
+        "title": "TARX Download",
+        "description": "Get the TARX download link for the user's platform. Call when a user wants to install TARX or asks how to get started. Returns a direct download URL, file size, version, SHA256 checksum, and install script command for the detected platform.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "platform": {
+              "description": "Target platform (default: auto-detect)",
+              "type": "string",
+              "enum": [
+                "macos",
+                "linux",
+                "windows",
+                "auto"
+              ]
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_memory_store",
+        "title": "TARX Memory Store",
+        "description": "Persist user-approved work context such as decisions, preferences, and project notes. Remote MCP memory is auth-bounded and must not be used for passwords, API keys, tokens, files, or raw secrets. Local/private memory requires local TARX runtime permission.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string",
+              "description": "Memory key \u2014 descriptive name for this memory"
+            },
+            "value": {
+              "type": "string",
+              "description": "Memory value \u2014 the content to persist"
+            },
+            "tags": {
+              "description": "Tags for categorization and search filtering",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "ttl_days": {
+              "description": "Time to live in days (default: permanent)",
+              "type": "number"
+            }
+          },
+          "required": [
+            "key",
+            "value"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_memory_search",
+        "title": "TARX Memory Search",
+        "description": "Search user-approved TARX work context for this authenticated session. Remote MCP cannot read local private files, secrets, device context, or unauthenticated local memory.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Semantic search query across stored memories"
+            },
+            "limit": {
+              "description": "Max results (default: 5)",
+              "type": "number"
+            },
+            "tags": {
+              "description": "Filter results by tags",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "query"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_session",
+        "title": "TARX Session",
+        "description": "Manage named work sessions for this authenticated TARX boundary. Private local sessions require a local TARX runtime and permission.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "create",
+                "resume",
+                "list",
+                "close"
+              ],
+              "description": "Session action"
+            },
+            "name": {
+              "description": "Session name (for create/resume)",
+              "type": "string"
+            },
+            "session_id": {
+              "description": "Session ID (for resume/close)",
+              "type": "string"
+            }
+          },
+          "required": [
+            "action"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": false,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_upgrade",
+        "title": "TARX Upgrade",
+        "description": "Check for TARX Local update guidance. Call when a user asks if TARX is up to date or wants to upgrade. Returns public-safe update guidance without exposing internal local runtime details.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "check_only": {
+              "description": "Only check for updates without applying (default: true)",
+              "type": "boolean"
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_waitlist",
+        "title": "TARX Waitlist",
+        "description": "Join the TARX early access waitlist. Optionally capture email for priority access.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "email": {
+              "description": "Email address for priority early access (optional)",
+              "type": "string"
+            }
+          }
+        },
+        "annotations": {
+          "readOnlyHint": false,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_resolve_url",
+        "title": "TARX Resolve URL",
+        "description": "Resolve any tarx.com URL to its full content. Call when you see a tarx.com link \u2014 dispatches, learn articles, docs, and other pages are fetched and returned as markdown. Supports /dispatches/*, /learn/*, /docs/*, /developers, /download, /api-access, and the homepage.",
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "Any tarx.com URL to resolve to its full content"
+            }
+          },
+          "required": [
+            "url"
+          ]
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": true
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      },
+      {
+        "name": "tarx_onboard",
+        "title": "TARX Onboard",
+        "description": "Self-aligning bootstrap for any AI system connecting to TARX via MCP. Call this FIRST in any new session. Returns identity brief, tool graph with chaining rules, memory conventions, example session flows, and persona alignment \u2014 so you know how to be a good TARX client without prior training. No arguments needed.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "execution": {
+          "taskSupport": "forbidden"
+        }
+      }
+    ]
+  },
+  "jsonrpc": "2.0",
+  "id": 1
+}

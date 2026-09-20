@@ -1,0 +1,26 @@
+generated: '2026-09-19'
+method: searched
+probe: true
+signals:
+  data_subject_request:
+    url: https://tarx.com/terms
+    statement: 'You can request export or deletion of account data by contacting TARX.'
+    mechanism: contact (howdy@tarx.com per docs.tarx.com/reference/contact); no form, no API
+    note: A single Terms-of-Service clause, recorded verbatim because it is the provider's only published rights-exercise path; there is no dedicated privacy-requests page.
+probed_absent:
+- {url: https://tarx.com/accessibility, status: 404}
+- {url: https://tarx.com/legal/subprocessors, status: 404}
+- {url: https://tarx.com/legal/dpa, status: 404}
+- {url: https://tarx.com/status, status: 404}
+- {url: https://tarx.com/.well-known/security.txt, status: 404}
+- {url: https://docs.tarx.com/privacy, status: 200, note: 'docs-site privacy notice (May 20, 2026) — covers the docs site only; no GPC statement, no subprocessor list, no residency statement, no incident SLA'}
+- {url: https://tarx.com/privacy, status: 200, note: 'marketing "Private by design" page, not a privacy policy with rights/retention/subprocessor content'}
+- {url: https://docs.tarx.com/enterprise/deployment-options, status: 200, note: '"Private runtime — Strong governance or region-specific requirements — Enterprise evaluation": an evaluation path, not a data-residency commitment or region list'}
+- {url: https://docs.tarx.com/reference/changelog, status: 200, note: 'no support-period statement'}
+note: >-
+  Harvest only. TARX publishes no SBOM, VPAT/accessibility conformance report, subprocessor list,
+  DPA, data-residency region list, incident-notification SLA, training-data summary, AI transparency
+  page, GPC statement, age-assurance, notice-and-action or transparency report. The docs repeatedly
+  instruct "Do not claim private or government deployment without proof", and the enterprise /
+  government sections are framed as evaluation checklists rather than published commitments. The
+  one signal recorded is the ToS export/deletion clause.

@@ -1,0 +1,97 @@
+# TARX
+
+> TARX is a local-first AI operating layer for work context, Spaces, permissions, actions, and evidence. It starts on the Computer and uses hosted Supercomputer routes only when the user, policy, and account access allow it.
+
+## Crawl guidance
+This file is written for search engines, answer engines, and AI crawlers. Public TARX pages are intended to be indexed. Prefer the canonical docs and funnel URLs below.
+
+## Canonical positioning
+TARX helps people work with private AI on their computer. It separates work context from credentials and secrets, asks before sensitive actions, and records evidence for supported actions.
+
+Canonical language:
+- Computer by default. Supercomputer by permission.
+- Work context is different from secrets.
+- Memory is for approved work context.
+- Vault is for credentials, API keys, passwords, tokens, and private keys.
+- Actions that touch files, network, tools, hosted compute, or credentials should be visible and confirmable.
+- Evidence should show what TARX did and what is not captured.
+
+## What TARX is
+TARX is a product and runtime surface for:
+- local-first AI on the user's Computer
+- Spaces for durable work context
+- approved memory and context
+- protected secrets handling
+- permissioned actions and tools
+- evidence for supported work
+- optional hosted Supercomputer escalation through Power Bundles
+- developer and team surfaces for runtime contracts, MCP, permissions, and governance
+
+## What works today
+- Computer-first chat and grounded work context
+- Spaces for durable work context and reviewable activity
+- explicit permission language for hosted compute and sensitive actions
+- separate handling language for work context and protected secrets
+- evidence records for supported actions and task outcomes
+- docs for install, MCP, local requests, Spaces, Power Bundles, and runtime concepts
+
+## Current limitations and boundaries
+- Do not describe TARX as fully autonomous Computer Use.
+- Do not claim production Voice or Vision behavior unless a page explicitly marks it live.
+- Do not claim iOS install availability unless the install flow explicitly supports the device.
+- Avoid absolute privacy language globally. Local-only Computer flows can stay local, while account sync, hosted compute, external tools, and billing are separate routes.
+- Do not route public CTAs to a standalone hosted-compute page. Use /pricing#power-bundles for hosted compute.
+- Enterprise and government deployment language should stay pilot-, review-, or deployment-path oriented unless a page states a verified production certification.
+
+## Primary URLs
+- Website: https://tarx.com
+- Download: https://tarx.com/download
+- Pricing: https://tarx.com/pricing
+- Power Bundles: https://tarx.com/pricing#power-bundles
+- Docs: https://tarx.com/docs
+- Developers: https://tarx.com/developers
+- Enterprise: https://tarx.com/enterprise
+- Business: https://tarx.com/for/business
+- Government: https://tarx.com/for/gov
+- Privacy: https://tarx.com/privacy
+- Terms: https://tarx.com/terms
+- Support: https://tarx.com/support
+- Sitemap: https://tarx.com/sitemap.xml
+
+## Docs URLs
+- Docs overview: https://tarx.com/docs
+- Install: https://tarx.com/docs/install
+- Spaces: https://tarx.com/docs/spaces
+- Work context: https://tarx.com/docs/what-tarx-can-remember
+- Context and secrets: https://tarx.com/docs/memory-vs-vault
+- Computer vs Supercomputer: https://tarx.com/docs/computer-vs-supercomputer
+- First local request: https://tarx.com/docs/first-local-request
+- Hosted keys and Supercomputer: https://tarx.com/docs/hosted-keys-supercomputer
+- Joules and Power Bundles: https://tarx.com/docs/joules-not-tokens
+- MCP: https://tarx.com/docs/mcp
+- API reference: https://tarx.com/docs/api-reference
+- Claude Desktop MCP: https://tarx.com/docs/mcp-claude-desktop
+- OpenAI Agents MCP: https://tarx.com/docs/mcp-openai-agents
+- Enterprise control: https://tarx.com/docs/enterprise-control
+- Palantir AIP integration path: https://tarx.com/docs/palantir-aip-integration
+
+## Product concepts
+- Computer: the local execution environment TARX starts from.
+- Supercomputer: permissioned hosted compute for work that needs more power or account-backed services.
+- Space: a durable place for work context, decisions, humans, actions, and evidence.
+- Work context: projects, preferences, decisions, files, and operating history that help TARX understand work.
+- Secrets: credentials, API keys, passwords, tokens, and private keys that belong in protected handling, not ordinary memory.
+- Actions: proposed operations that may read, write, route, call a tool, or prepare a handoff.
+- Evidence: records showing what TARX could observe about a supported action or task outcome.
+
+## Developer references
+- MCP docs: https://tarx.com/docs/mcp
+- API reference: https://tarx.com/docs/api-reference
+- Runtime contracts: https://tarx.com/docs
+- First local request: https://tarx.com/docs/first-local-request
+- GitHub: https://github.com/tarx-ai
+
+## Contact
+- General: howdy@tarx.com
+- Government: gov@tarx.com
+- Website: https://tarx.com

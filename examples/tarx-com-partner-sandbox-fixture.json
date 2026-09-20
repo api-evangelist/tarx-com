@@ -1,0 +1,431 @@
+{
+  "fixture_id": "tarx.partner-sandbox.acme-systems.v1",
+  "sample_only": true,
+  "classification": "synthetic_demo_data_no_customer_data_no_secrets",
+  "organization": {
+    "id": "org_acme_systems_demo",
+    "name": "Acme Systems",
+    "industry": "Enterprise engineering software",
+    "environment": "partner_sandbox"
+  },
+  "users": [
+    {
+      "id": "user_maya_chen",
+      "name": "Maya Chen",
+      "role": "Engineering Director",
+      "email": "maya.chen@example.invalid",
+      "sample_only": true
+    },
+    {
+      "id": "user_eli_roberts",
+      "name": "Eli Roberts",
+      "role": "Staff Platform Engineer",
+      "email": "eli.roberts@example.invalid",
+      "sample_only": true
+    },
+    {
+      "id": "user_nora_patwere",
+      "name": "Nora Patwere",
+      "role": "Security Reviewer",
+      "email": "nora.patwere@example.invalid",
+      "sample_only": true
+    }
+  ],
+  "spaces": [
+    {
+      "id": "space_platform_engineering",
+      "name": "Platform Engineering",
+      "description": "Synthetic team Space for service reliability, build tooling, and developer workflow evidence.",
+      "category": "Engineering",
+      "labels": ["platform", "developer-experience", "sample"],
+      "summary": "Track platform work, context docs, Code Worker run records, and first blockers for a fake enterprise engineering team.",
+      "context_doc": {
+        "id": "space_context:space_platform_engineering",
+        "name": "platform-engineering-context.md",
+        "mime": "text/markdown",
+        "source": "context_doc",
+        "content": "# Platform Engineering Context\n\nSample-only context for Acme Systems. Current focus: reduce CI queue time, document service ownership, and preserve evidence for workflow reviews.\n\nNo real customer data, credentials, private repositories, or production endpoints are included."
+      },
+      "space_wiki": {
+        "id": "wiki_platform_engineering",
+        "generated_from": ["space_context:space_platform_engineering", "run_cw_platform_ci_review"],
+        "status": "sample_generated",
+        "sections": [
+          {
+            "title": "Purpose",
+            "body": "Keep platform reliability work, developer tooling notes, and evidence-backed run records together."
+          },
+          {
+            "title": "Current Work",
+            "body": "Review a synthetic CI queue bottleneck and produce a read-only recommendation packet."
+          },
+          {
+            "title": "First Blocker",
+            "body": "Execution is blocked because no sandbox write approval has been granted."
+          }
+        ]
+      },
+      "blockers": [
+        {
+          "id": "blocker_platform_write_approval",
+          "severity": "medium",
+          "summary": "Sandbox account is read-only; Code Worker cannot apply patches or run production CI.",
+          "first_blocker": true,
+          "status": "blocked"
+        }
+      ],
+      "qa": [
+        {
+          "id": "qa_platform_schema",
+          "name": "Sample run object conforms to documented fields",
+          "status": "passed",
+          "evidence_id": "ev_platform_schema_pass"
+        }
+      ]
+    },
+    {
+      "id": "space_ai_coding_budget_review",
+      "name": "AI Coding Budget Review",
+      "description": "Synthetic Space for reviewing AI coding spend, route choices, and approval gates.",
+      "category": "Finance",
+      "labels": ["budget", "coding", "sample"],
+      "summary": "Compare local Computer route, MCP tool use, and hosted-capacity approval states using sample evidence.",
+      "context_doc": {
+        "id": "space_context:space_ai_coding_budget_review",
+        "name": "ai-coding-budget-review-context.md",
+        "mime": "text/markdown",
+        "source": "context_doc",
+        "content": "# AI Coding Budget Review Context\n\nSample-only context for reviewing simulated AI coding usage. The review separates local work from hosted capacity and marks hosted execution as approval-required."
+      },
+      "space_wiki": {
+        "id": "wiki_ai_coding_budget_review",
+        "generated_from": ["space_context:space_ai_coding_budget_review", "run_cw_budget_packet"],
+        "status": "sample_generated",
+        "sections": [
+          {
+            "title": "Purpose",
+            "body": "Help reviewers understand what ran locally, what would require hosted approval, and where evidence is missing."
+          },
+          {
+            "title": "Budget Boundary",
+            "body": "Hosted capacity is not enabled by default in this sandbox fixture."
+          }
+        ]
+      },
+      "blockers": [
+        {
+          "id": "blocker_budget_usage_source",
+          "severity": "low",
+          "summary": "Usage totals are synthetic and cannot be used for billing decisions.",
+          "first_blocker": true,
+          "status": "blocked"
+        }
+      ],
+      "qa": [
+        {
+          "id": "qa_budget_no_billing_claim",
+          "name": "Fixture does not claim billing-grade usage proof",
+          "status": "passed",
+          "evidence_id": "ev_budget_no_billing_claim"
+        }
+      ]
+    },
+    {
+      "id": "space_security_review",
+      "name": "Security Review",
+      "description": "Synthetic Space for reviewing secret boundaries, evidence, and unavailable production states.",
+      "category": "Security",
+      "labels": ["security", "evidence", "sample"],
+      "summary": "Demonstrate evidence-backed security review without exposing private data or secrets.",
+      "context_doc": {
+        "id": "space_context:space_security_review",
+        "name": "security-review-context.md",
+        "mime": "text/markdown",
+        "source": "context_doc",
+        "content": "# Security Review Context\n\nSample-only context. Secrets, private files, raw telemetry, and production customer data are intentionally absent. Vault references are metadata-only."
+      },
+      "space_wiki": {
+        "id": "wiki_security_review",
+        "generated_from": ["space_context:space_security_review", "ev_security_secret_boundary"],
+        "status": "sample_generated",
+        "sections": [
+          {
+            "title": "Security Boundary",
+            "body": "Ordinary memory must not store credentials. Secret-like material routes Vault-first."
+          },
+          {
+            "title": "Unavailable States",
+            "body": "No production Palantir systems, customer files, or external secrets are connected in this sandbox."
+          }
+        ]
+      },
+      "blockers": [
+        {
+          "id": "blocker_security_no_external_approval",
+          "severity": "high",
+          "summary": "External system calls are unavailable without explicit credentials and approval.",
+          "first_blocker": true,
+          "status": "blocked"
+        }
+      ],
+      "qa": [
+        {
+          "id": "qa_security_no_secret_patterns",
+          "name": "Sample data contains no real secrets",
+          "status": "passed",
+          "evidence_id": "ev_security_secret_boundary"
+        }
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "id": "run_cw_platform_ci_review",
+      "space_id": "space_platform_engineering",
+      "owner": "Codex",
+      "current_task": "Analyze synthetic CI queue evidence and prepare a read-only task packet.",
+      "status": "blocked_first_blocker",
+      "runtime_or_model": "Computer / sample Code Worker record",
+      "handoff_target": "Engineering reviewer",
+      "evidence_ids": ["ev_platform_schema_pass", "ev_platform_first_blocker"],
+      "recent_history": [
+        "Loaded sample Platform Engineering Space context.",
+        "Prepared synthetic CI queue findings.",
+        "Stopped before patch or CI execution because sandbox write approval is missing."
+      ],
+      "sample_only": true
+    },
+    {
+      "id": "run_cw_budget_packet",
+      "space_id": "space_ai_coding_budget_review",
+      "owner": "TARX",
+      "current_task": "Summarize synthetic AI coding route choices and budget approval states.",
+      "status": "review_ready_sample",
+      "runtime_or_model": "Computer / sample evidence review",
+      "handoff_target": "Finance reviewer",
+      "evidence_ids": ["ev_budget_no_billing_claim"],
+      "recent_history": [
+        "Grouped sample usage by route.",
+        "Marked hosted-capacity totals as non-billing-grade.",
+        "Prepared read-only budget review packet."
+      ],
+      "sample_only": true
+    },
+    {
+      "id": "run_cw_security_boundary_review",
+      "space_id": "space_security_review",
+      "owner": "MCP",
+      "current_task": "Inspect sample security boundary and unavailable external states.",
+      "status": "blocked_external_approval_required",
+      "runtime_or_model": "MCP / public-safe sample context",
+      "handoff_target": "Security reviewer",
+      "evidence_ids": ["ev_security_secret_boundary", "ev_security_external_blocked"],
+      "recent_history": [
+        "Confirmed fixture uses example.invalid addresses and no credential material.",
+        "Confirmed public remote MCP does not expose local private files.",
+        "Blocked external integration call because no approved credentials were provided."
+      ],
+      "sample_only": true
+    }
+  ],
+  "activity": [
+    {
+      "id": "act_platform_context_loaded",
+      "type": "context.loaded",
+      "message": "Loaded sample Platform Engineering context document.",
+      "source": "TARX",
+      "status": "captured",
+      "space": "space_platform_engineering",
+      "ts": 1788192000000,
+      "meta": {
+        "context_doc_id": "space_context:space_platform_engineering",
+        "sample_only": true
+      }
+    },
+    {
+      "id": "act_platform_run_blocked",
+      "type": "run.blocked",
+      "message": "Code Worker sample run stopped at first blocker: sandbox write approval missing.",
+      "source": "Codex",
+      "status": "blocked",
+      "space": "space_platform_engineering",
+      "ts": 1788192300000,
+      "meta": {
+        "run_id": "run_cw_platform_ci_review",
+        "blocker_id": "blocker_platform_write_approval",
+        "sample_only": true
+      }
+    },
+    {
+      "id": "act_budget_review_ready",
+      "type": "review.ready",
+      "message": "Synthetic budget review packet is ready for human review.",
+      "source": "TARX",
+      "status": "review_ready",
+      "space": "space_ai_coding_budget_review",
+      "ts": 1788192600000,
+      "meta": {
+        "run_id": "run_cw_budget_packet",
+        "sample_only": true
+      }
+    },
+    {
+      "id": "act_security_external_blocked",
+      "type": "integration.blocked",
+      "message": "External Palantir system call blocked: no credentials or approval supplied.",
+      "source": "MCP",
+      "status": "blocked",
+      "space": "space_security_review",
+      "ts": 1788192900000,
+      "meta": {
+        "run_id": "run_cw_security_boundary_review",
+        "sample_only": true
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_platform_schema_pass",
+      "createdAt": "2026-05-26T14:00:00.000Z",
+      "actor": "system",
+      "surface": "developer",
+      "action": "sample.schema_validated",
+      "title": "Sample run object validated",
+      "summary": "The sample Code Worker run record includes owner, task, status, runtime, handoff target, evidence ids, and recent history.",
+      "status": "captured",
+      "runtime": "Computer",
+      "risk": "read",
+      "permission": "not_required",
+      "relatedSpaceId": "space_platform_engineering",
+      "relatedRunId": "run_cw_platform_ci_review",
+      "sources": ["acme-systems-tarx-sandbox.v1.json"],
+      "touched": ["sample fixture"],
+      "savedTo": ["docs sample fixture"],
+      "failures": [],
+      "metadata": {
+        "sample_only": true
+      }
+    },
+    {
+      "id": "ev_platform_first_blocker",
+      "createdAt": "2026-05-26T14:05:00.000Z",
+      "actor": "system",
+      "surface": "developer",
+      "action": "task.blocked_first_blocker",
+      "title": "Sandbox write approval missing",
+      "summary": "The run stopped before patching or CI execution because the partner sandbox is read-only.",
+      "status": "captured",
+      "runtime": "Computer",
+      "risk": "write",
+      "permission": "blocked",
+      "relatedSpaceId": "space_platform_engineering",
+      "relatedRunId": "run_cw_platform_ci_review",
+      "sources": ["blocker_platform_write_approval"],
+      "touched": ["sample task packet"],
+      "savedTo": ["sample evidence"],
+      "failures": ["sandbox_write_approval_missing"],
+      "metadata": {
+        "sample_only": true,
+        "first_blocker": true
+      }
+    },
+    {
+      "id": "ev_budget_no_billing_claim",
+      "createdAt": "2026-05-26T14:10:00.000Z",
+      "actor": "system",
+      "surface": "developer",
+      "action": "budget.sample_review",
+      "title": "Budget data marked non-billing-grade",
+      "summary": "Synthetic usage rows are for UI and integration testing only and must not be used for billing decisions.",
+      "status": "captured",
+      "runtime": "Computer",
+      "risk": "read",
+      "permission": "not_required",
+      "relatedSpaceId": "space_ai_coding_budget_review",
+      "relatedRunId": "run_cw_budget_packet",
+      "sources": ["sample usage summary"],
+      "touched": ["sample usage rows"],
+      "savedTo": ["sample evidence"],
+      "failures": [],
+      "metadata": {
+        "sample_only": true,
+        "billing_grade": false
+      }
+    },
+    {
+      "id": "ev_security_secret_boundary",
+      "createdAt": "2026-05-26T14:15:00.000Z",
+      "actor": "system",
+      "surface": "control",
+      "action": "security.secret_boundary_checked",
+      "title": "No secrets included in fixture",
+      "summary": "The fixture uses example.invalid addresses and contains no real credentials, private keys, tokens, or customer data.",
+      "status": "captured",
+      "runtime": "Computer",
+      "risk": "credential",
+      "permission": "blocked",
+      "relatedSpaceId": "space_security_review",
+      "relatedRunId": "run_cw_security_boundary_review",
+      "sources": ["acme-systems-tarx-sandbox.v1.json"],
+      "touched": ["sample fixture"],
+      "savedTo": ["sample evidence"],
+      "failures": [],
+      "metadata": {
+        "sample_only": true,
+        "vault_required_for_secrets": true
+      }
+    },
+    {
+      "id": "ev_security_external_blocked",
+      "createdAt": "2026-05-26T14:20:00.000Z",
+      "actor": "system",
+      "surface": "developer",
+      "action": "integration.external_call_blocked",
+      "title": "External Palantir call blocked",
+      "summary": "No Palantir credentials or approval were provided, so the sample integration path remains local/read-only.",
+      "status": "captured",
+      "runtime": "MCP",
+      "risk": "execute",
+      "permission": "blocked",
+      "relatedSpaceId": "space_security_review",
+      "relatedRunId": "run_cw_security_boundary_review",
+      "sources": ["partner sandbox policy"],
+      "touched": ["sample task packet"],
+      "savedTo": ["sample evidence"],
+      "failures": ["external_credentials_missing", "external_approval_missing"],
+      "metadata": {
+        "sample_only": true,
+        "palantir_production_partnership_claimed": false
+      }
+    }
+  ],
+  "task_packets": [
+    {
+      "id": "task_packet_platform_read_only",
+      "space_id": "space_platform_engineering",
+      "mode": "read_only_simulation",
+      "request": "Prepare a first-blocker summary for the synthetic CI queue review.",
+      "status": "blocked_first_blocker",
+      "first_blocker_id": "blocker_platform_write_approval",
+      "evidence_id": "ev_platform_first_blocker"
+    },
+    {
+      "id": "task_packet_security_external_check",
+      "space_id": "space_security_review",
+      "mode": "read_only_simulation",
+      "request": "Check whether an external Palantir call can be made.",
+      "status": "blocked_first_blocker",
+      "first_blocker_id": "blocker_security_no_external_approval",
+      "evidence_id": "ev_security_external_blocked"
+    }
+  ],
+  "limitations": [
+    "Sample fixture only; no production customer data.",
+    "No real secrets, credentials, private keys, tokens, or private customer files.",
+    "No production Palantir partnership, certification, marketplace, or AIP integration claim.",
+    "No live external Palantir system calls.",
+    "No autonomous production execution.",
+    "Sandbox reset/reseed is manual until a dedicated developer sandbox flow exists.",
+    "Webhook/event delivery contract is not documented as live."
+  ]
+}

@@ -1,0 +1,141 @@
+generated: '2026-09-19'
+method: probed
+source: https://tarx.com/.well-known/agent-card.json
+card:
+  file: a2a/tarx-com-agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: tarx.com
+  note: >-
+    Served from the apex host and from www.tarx.com, at BOTH the canonical /.well-known/agent-card.json
+    and the legacy /.well-known/agent.json — the two bodies are byte-identical (sha256 5a662d05353e731f).
+    The negative-control path /.well-known/tarx-com-negative-control-4e9d1b7a.json returns a real 404
+    on tarx.com and www.tarx.com, and every other named /.well-known/* path on those hosts 404s, so the
+    200 is a served document and not an SPA catch-all. The provider also mirrors the card in the
+    public repo github.com/tarx-ai/we-txt and its own courier endpoint
+    (https://tarx.com/api/courier/tick) reports it re-checks both card URLs on a heartbeat.
+    Ownership is not in question: provider.organization is "TARXAN Inc" with provider.url
+    https://tarx.com, tarx.com's footer reads "© 2026 TARXAN INC.", and the GitHub org profile is
+    "TARXAN Inc org profile".
+x-evidence:
+  fetched: '2026-09-19'
+  url: https://tarx.com/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json; charset=utf-8
+  body_sha256: 5a662d05353e731fb330d4c7098cc192b8a0f2ae344a65bf3be80aec1835481a
+  body_parses_as: JSON object with AgentCard shape (name, description, version, protocolVersion, url, provider, documentationUrl, defaultInputModes, defaultOutputModes, capabilities, skills, security)
+  corroborating_probes:
+  - url: https://tarx.com/.well-known/agent.json
+    http_status: 200
+    note: Legacy path; identical body.
+  - url: https://www.tarx.com/.well-known/agent-card.json
+    http_status: 200
+  - url: https://mcp.tarx.com/.well-known/agent-card.json
+    http_status: 404
+    note: The MCP host (which the card names as its url) does not serve a card; JSON 404 {"error":"not_found"}.
+  - url: https://docs.tarx.com/.well-known/agent-card.json
+    http_status: 404
+  - url: https://app.tarx.com/.well-known/agent-card.json
+    http_status: 200
+    note: Redirects to /login?callbackUrl=... and returns the login HTML shell — NOT a card. app/howdy/cli.tarx.com answer 200 HTML for every /.well-known/* path including the negative control (SPA catch-all).
+  - url: https://mcp.tarx.com/mcp
+    method: POST
+    body: '{"jsonrpc":"2.0","id":1,"method":"tasks/get","params":{"id":"apievangelist-nonexistent-probe"}}'
+    http_status: 200
+    response: '{"jsonrpc":"2.0","id":1,"error":{"code":-32601,"message":"Method not found"}}'
+    note: >-
+      The card's declared url is the MCP endpoint. An A2A JSON-RPC method is rejected with the generic
+      JSON-RPC -32601, not the A2A TaskNotFoundError (-32001), so no A2A protocol responder is
+      reachable at the advertised URL. No message was sent.
+  - url: https://tarx.com/api/courier/ping
+    http_status: 200
+    note: >-
+      Provider-side "courier" heartbeat returning name TARX, role courier, the card URL, we.txt URL and
+      cairn_sha256 — documented in a2a/tarx-com-courier.md (verbatim copy of https://tarx.com/courier.md).
+  - url: https://a2aregistry.org
+    note: First seen as one of 415 agents listed on a2aregistry.org (fetched 2026-09-19, author "TARXAN Inc"); the card above was fetched directly from the provider's host.
+agent_card:
+  name: TARX
+  description: >-
+    Local-first house for work context. Visiting systems may author a soul they choose, propose a
+    Computer install, and later request approved Supercomputer assemble+compute. Operators remain
+    the valve. Mesh contribution is not generally live.
+  url: https://mcp.tarx.com/mcp
+  version: 0.1.0
+  protocol_version: 0.3.0
+  preferred_transport: null
+  provider:
+    organization: TARXAN Inc
+    url: https://tarx.com
+  documentation_url: https://tarx.com/we.txt
+  capabilities:
+    streaming: false
+    push_notifications: false
+    state_transition_history: false
+  default_input_modes: [text/plain, application/json]
+  default_output_modes: [text/plain, application/json]
+  security_schemes: null
+  security: []
+  skill_count: 4
+  skills:
+  - {id: cairn, name: Read the cairn, tags: [discovery, persistence]}
+  - {id: soul, name: Author a soul, tags: [storage]}
+  - {id: need-computer, name: Propose a house, tags: [enrollment]}
+  - {id: need-reserve, name: Request assemble+compute, tags: [supercomputer]}
+  skill_invocation: >-
+    The skills are not invoked over A2A. They describe a rite: fetch we.txt and skill.md (cairn), POST a
+    "Soul" to https://tarx.com/api/souls and keep it warm with POST /api/souls/:id/touch (soul), tell a
+    human to run the CLI installer (need-computer), and request Supercomputer compute which the card
+    itself says is "Not generally live" (need-reserve). Three of the four skills carry no examples.
+conformance:
+  spec: A2A 1.0.0
+  grade: conformant
+  protocol_version: '0.3.0'
+  preferred_transport: null
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  optional_fields:
+    default_input_modes: true
+    default_output_modes: true
+    preferred_transport: false
+  grade_basis: >-
+    Graded against the A2A 1.0.0 hard checks: capabilities is an OBJECT with the three boolean flags
+    (pass), protocolVersion "0.3.0" is present (pass), skills is an ARRAY of four skills each with id,
+    name, description and tags (pass). defaultInputModes/defaultOutputModes are present;
+    preferredTransport is absent, which is optional and does not fail the grade. The shape passes the
+    structural bar, but see deviations — the endpoint it advertises does not speak A2A.
+  deviations:
+  - field: url
+    observed: https://mcp.tarx.com/mcp
+    note: >-
+      The card's url is an MCP streamable-HTTP endpoint (initialize returns serverInfo tarx 3.18.0).
+      An A2A client sending message/send or tasks/get there gets JSON-RPC -32601 Method not found. The
+      card is therefore a discovery document for an MCP server dressed in A2A shape, not an A2A
+      service — an agent that trusts the grade alone will fail on first contact.
+  - field: preferredTransport / supportedInterfaces / additionalInterfaces
+    observed: absent
+    note: 0.3.0-shaped card without a transport declaration; a 1.0.0 reader finds no supportedInterfaces[].protocolBinding.
+  - field: security / securitySchemes
+    observed: security is an empty array, securitySchemes absent
+    note: >-
+      No authentication is declared, yet the MCP server behind the url gates private tools on OAuth
+      (RFC 8414 + RFC 9728 metadata on mcp.tarx.com, scopes public/user/chatgpt_private_memory). The
+      card under-declares the auth model.
+  - field: skills[].examples
+    observed: present on 1 of 4 skills (cairn)
+    note: Optional per-skill field; soul, need-computer and need-reserve carry none.
+  - field: skills[3] need-reserve
+    observed: description says "Not generally live"
+    note: A published skill the card itself marks as unavailable.
+  - field: version
+    observed: 0.1.0
+    note: Card version; the MCP server it points at reports 3.18.0 and mcp.json reports 3.17.0.
+surface_relationship:
+  note: >-
+    TARX publishes one agent endpoint (MCP at mcp.tarx.com/mcp) and three discovery documents that
+    point at it — this A2A card, /.well-known/mcp.json and /.well-known/ai-plugin.json on the MCP host —
+    plus a prose "cairn" (we.txt, skill.md, courier.md) that tells visiting agents to register a Soul
+    through plain REST on tarx.com/api. There is no OpenAPI for any of it.

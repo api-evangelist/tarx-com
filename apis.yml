@@ -1,23 +1,224 @@
 aid: tarx-com
 name: TARXAN Inc
-description: 'TARXAN Inc is a company surfaced via the API Evangelist harvest backlog (source: a2a-registry)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  TARXAN Inc (TARX, Austin TX) builds a local-first AI agent runtime: free TARX_OS / TARX Desktop
+  software for Apple Silicon Macs, a shell CLI that installs a local inference daemon and local MCP
+  servers, an optional hosted "Supercomputer" reached through an OpenAI-compatible API
+  (api.tarx.com/v1, model t-supercomputer), and dedicated "Black Box" and humanoid/quadruped hardware.
+  Its public agent surface is a remote MCP server at mcp.tarx.com/mcp (22 anonymous tools, OAuth 2.0
+  + PKCE for private memory, RFC 8414/9728 metadata) advertised by an A2A 0.3.0 agent card at
+  tarx.com/.well-known/agent-card.json and a prose "cairn" (we.txt, skill.md, courier.md) that tells
+  visiting agents how to register a Soul through plain REST on tarx.com/api. No OpenAPI is published.
+image: https://tarx.com/tarx-logo.png
 url: https://raw.githubusercontent.com/api-evangelist/tarx-com/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:a2a-registry
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: full enrichment pass 2026-09-19 (local-v3)
 specificationVersion: '0.20'
 created: '2026-09-19'
 modified: '2026-09-19'
 tags:
 - Company
-apis: []
+- AI Agents
+- Agent Runtime
+- Local-First AI
+- Private AI
+- MCP
+- A2A
+- LLM
+- Inference
+- Developer Tools
+- Hardware
+- Robotics
+apis:
+- name: TARX Remote MCP Server
+  description: >-
+    Streamable-HTTP MCP server (serverInfo tarx 3.18.0, protocol 2025-06-18) exposing 22 tools, 5
+    prompts and 5 resources anonymously — public TARX context search/fetch, install guidance,
+    runtime status, GitHub repo context — with private memory and session tools gated on OAuth 2.0
+    authorization_code + PKCE (scopes public, user, chatgpt_private_memory). A local stdio variant is
+    installed by the TARX CLI. This is also the endpoint the A2A agent card declares as its url.
+  image: https://tarx.com/tarx-logo.png
+  humanURL: https://howdy.tarx.com/mcp
+  baseURL: https://mcp.tarx.com/mcp
+  tags:
+  - MCP
+  - AI Agents
+  - Agent Memory
+  properties:
+  - type: MCPServer
+    url: mcp/tarx-com-mcp.yml
+  - type: Documentation
+    url: https://docs.tarx.com/developers/mcp
+  - type: Documentation
+    name: OpenAI Agents MCP
+    url: https://docs.tarx.com/developers/mcp-openai-agents
+  - type: Documentation
+    name: Claude Desktop MCP
+    url: https://docs.tarx.com/developers/mcp-claude-desktop
+  - type: OAuthScopes
+    url: scopes/tarx-com-scopes.yml
+  - type: Authentication
+    url: authentication/tarx-com-authentication.yml
+  - type: AgenticAccess
+    url: agentic-access/tarx-com-agentic-access.yml
+- name: TARX Supercomputer API
+  description: >-
+    OpenAI-compatible hosted inference API. GET /v1/models lists the single model t-supercomputer
+    (owned_by tarx, OpenRouter slug tarx/t-supercomputer) without a key; POST /v1/chat/completions
+    requires a per-account TARX API key (401 tarx_api_key_required). The docs describe the same
+    request shape against a local runtime at 127.0.0.1:11440 with model tarx-local. Hosted capacity
+    is labelled Pilot-ready; no OpenAPI, rate limits or pricing are published for it.
+  image: https://tarx.com/tarx-logo.png
+  humanURL: https://docs.tarx.com/developers/api
+  baseURL: https://api.tarx.com/v1
+  tags:
+  - LLM
+  - Inference
+  - Chat Completions
+  properties:
+  - type: Documentation
+    url: https://docs.tarx.com/developers/api
+  - type: APIReference
+    url: https://docs.tarx.com/reference/api
+  - type: ErrorCatalog
+    url: errors/tarx-com-problem-types.yml
+  - type: Authentication
+    url: authentication/tarx-com-authentication.yml
+- name: TARX Courier and Souls API
+  description: >-
+    Plain REST endpoints on tarx.com documented only for visiting AI agents in we.txt, skill.md and
+    courier.md: GET /api/courier/ping and /api/courier/tick (signed heartbeat naming the agent card
+    and cairn hash), POST /api/courier/introduce (hand TARX a peer agent-card URL), POST /api/souls
+    (register a "Soul" — a chosen context bundle; letter expires in 72 hours, key 30 days after last
+    touch), POST /api/souls/:id/touch, and GET /api/rail/census (daily aggregate counts). No
+    authentication is documented. robots.txt disallows /api/ for crawlers.
+  image: https://tarx.com/tarx-logo.png
+  humanURL: https://tarx.com/skill.md
+  baseURL: https://tarx.com/api
+  tags:
+  - AI Agents
+  - Agent Discovery
+  properties:
+  - type: Documentation
+    name: we.txt (cairn hub)
+    url: https://tarx.com/we.txt
+  - type: Documentation
+    name: courier.md
+    url: https://tarx.com/courier.md
+  - type: AgentSkill
+    url: skills/tarx-com-skill.md
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/tarx-com-domain-security.yml
 - type: Website
   url: https://tarx.com/
+- type: Documentation
+  url: https://docs.tarx.com
+- type: DeveloperPortal
+  url: https://howdy.tarx.com
+- type: GettingStarted
+  url: https://docs.tarx.com/start-here/quickstart
+- type: Support
+  url: https://tarx.com/support
+- type: Contact
+  url: https://docs.tarx.com/reference/contact
+- type: Blog
+  url: https://tarx.com/dispatches
+- type: Blog
+  name: Substack
+  url: https://tarx.substack.com/
+- type: GitHubOrganization
+  url: https://github.com/tarx-ai
+- type: Pricing
+  url: https://docs.tarx.com/pricing/overview
+- type: SignUp
+  url: https://tarx.com/join
+- type: TermsOfService
+  url: https://tarx.com/terms
+- type: PrivacyPolicy
+  url: https://tarx.com/privacy
+- type: ChangeLog
+  url: https://docs.tarx.com/reference/changelog
+- type: ChangeLog
+  url: changelog/tarx-com-changelog.yml
+- type: Security
+  url: https://tarx.com/security
+- type: About
+  url: https://tarx.com/about
+- type: AgentCard
+  url: a2a/tarx-com-a2a.yml
+- type: MCPServer
+  url: mcp/tarx-com-mcp.yml
+- type: LLMsTxt
+  url: llms/tarx-com-llms.txt
+- type: LLMsTxt
+  name: docs.tarx.com llms.txt
+  url: llms/tarx-com-docs-llms.txt
+- type: LLMsTxt
+  name: howdy.tarx.com llms.txt
+  url: llms/tarx-com-howdy-llms.txt
+- type: WellKnown
+  url: well-known/tarx-com-well-known.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/tarx-com-agentic-access.yml
+- type: Packages
+  url: packages/tarx-com-packages.yml
+- type: CLI
+  url: cli/tarx-com-cli.yml
+- type: Authentication
+  url: authentication/tarx-com-authentication.yml
+- type: OAuthScopes
+  url: scopes/tarx-com-scopes.yml
+- type: Conformance
+  url: conformance/tarx-com-conformance.yml
+- type: ErrorCatalog
+  url: errors/tarx-com-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/tarx-com-lifecycle.yml
+- type: Conventions
+  url: conventions/tarx-com-conventions.yml
+- type: Plans
+  url: plans/tarx-com-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/tarx-com-rate-limits.yml
+- type: Sandbox
+  url: sandbox/tarx-com-sandbox.yml
+- type: JSONSchema
+  name: Partner sandbox fixture schema
+  url: json-schema/tarx-com-partner-sandbox-fixture-schema.json
+- type: Examples
+  name: Partner sandbox fixture
+  url: examples/tarx-com-partner-sandbox-fixture.json
+- type: RegulatoryPosture
+  url: regulatory/tarx-com-regulatory-posture.yml
+- type: DataSubjectRequest
+  url: https://tarx.com/terms
+- type: VulnerabilityDisclosure
+  url: security/tarx-com-vulnerability-disclosure.yml
+- type: Security
+  url: security/tarx-com-vulnerability-disclosure.yml
+x-contract-discovery:
+  checked: '2026-09-19'
+  openapi: none — tarx.com, docs.tarx.com, mcp.tarx.com /openapi.json|.yaml|swagger.json|api-docs|docs|redoc 404; api.tarx.com/v1/openapi.json JSON 404 ("Unknown endpoint"), every non-/v1 path on api.tarx.com Cloudflare 530; ai-plugin.json's api.url (mcp.tarx.com/openai-tools) is a function-calling export, not OpenAPI
+  graphql: none — no /graphql surface referenced anywhere
+  mcp: live — anonymous tools/list at https://mcp.tarx.com/mcp, saved verbatim (mcp/tarx-com-mcp-tools.json)
+  a2a: live — https://tarx.com/.well-known/agent-card.json (and legacy agent.json, and www), saved verbatim
+  asyncapi_webhooks: none — provider states no webhook contract is live
+  grpc_wsdl_ogc: none
+x-pointer-verification:
+  checked: '2026-09-19'
+  note: Every external common[] and properties[] URL above was fetched during this pass and returned 200 (tarx.com/pricing was NOT used because it 308s to /shop; status.tarx.com does not resolve; tarx.com/docs is 404 — none of those are wired).
+x-enrichment:
+  date: '2026-09-19'
+  status: enriched
+  artifacts_added: 36
+  pass: local-v3

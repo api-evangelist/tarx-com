@@ -1,0 +1,48 @@
+generated: '2026-09-19'
+method: searched
+source: https://docs.tarx.com/reference/changelog, https://docs.tarx.com/reference/status, https://github.com/tarx-ai/*/releases, https://raw.githubusercontent.com/tarx-ai/tarx-cli/main/README.md
+versioning:
+  api: URL path version (/v1) on api.tarx.com; no version header or date-based versioning documented.
+  mcp: Server semver reported by initialize (3.18.0 on 2026-09-19; mcp.json says 3.17.0; tarx_status payload reports 3.16.0) and MCP protocolVersion 2025-06-18.
+  agent_card: version 0.1.0, protocolVersion 0.3.0.
+  cli: GitHub release tags (v1.1.0, 2026-03-13); desktop v1.1.13 (2026-07-29); TARX-OS v1.0.0-beta.9 (2026-08-27).
+  policy: null
+  note: No versioning or breaking-change policy page exists.
+maturity:
+  stated: >-
+    "Public developer preview. Interfaces may change before the first stable release." (tarx-cli README).
+    docs.tarx.com labels API and MCP "Pilot-ready", Desktop and CLI "Available now"; tarx.com says
+    "T-Supercomputer is in beta. Production capacity, contributor inference, marketplace listing,
+    reward redemption, and private clusters are not live." and "The public download is not live.
+    Join beta at https://tarx.com/join." (llms.txt).
+  status_labels_page: https://docs.tarx.com/reference/status
+  labels: [Available now, Pilot-ready, Enterprise evaluation, Government evaluation, Roadmap]
+deprecation:
+  policy: null
+  sunset_header: false
+  deprecation_header: false
+  deprecated_operations: []
+  note: No deprecation policy, no RFC 8594 headers observed, no OpenAPI to derive deprecated operations from.
+status_page:
+  url: null
+  note: >-
+    status.tarx.com does not resolve (NXDOMAIN) and tarx.com/status is 404. docs.tarx.com/reference/status
+    is a glossary of capability-status LABELS, not a service status page. The MCP tool tarx_status
+    reports the state of a LOCAL daemon ("TARX daemon is offline" when called remotely), not the
+    hosted service. No StatusPage pointer is emitted.
+sla:
+  url: null
+  note: None published. Enterprise terms "are established in a separate written agreement" (tarx.com/terms).
+changelog:
+  url: https://docs.tarx.com/reference/changelog
+  file: changelog/tarx-com-changelog.yml
+support_lifetime:
+  stated_period: null
+  note: No support-period statement found.
+retention_and_expiry:
+  souls_letter: "'Letter expires in 72 hours.' (skill.md / we.txt)"
+  souls_key: "'Key lives 30 days after last touch.' (skill.md)"
+  memory_ttl: tarx_memory_store accepts an optional ttl_days argument (openai-tools export).
+webhooks:
+  documented: false
+  note: '"No partner webhook contract is documented as live." — docs.tarx.com/developers/partner-sandbox'

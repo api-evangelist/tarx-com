@@ -1,0 +1,45 @@
+generated: '2026-09-19'
+method: searched
+source: https://docs.tarx.com/developers/partner-sandbox (+ /developers/palantir-readiness)
+kind: partner-sandbox
+self_service: false
+test_vs_live: null
+note: >-
+  There is no self-serve sandbox, no test key prefix and no magic test values. TARX documents a
+  "partner sandbox": an operator-provisioned developer account seeded with a synthetic fixture. The
+  fixture and its JSON Schema are public and saved verbatim; the account, reset and reseed are manual.
+  "There is no canonical, self-service partner sandbox account plus reseed/reset workflow documented
+  as live." (docs.tarx.com/developers/palantir-readiness)
+fixture:
+  id: tarx.partner-sandbox.acme-systems.v1
+  data_url: https://docs.tarx.com/samples/palantir-developer-sandbox/acme-systems-tarx-sandbox.v1.json
+  data_file: examples/tarx-com-partner-sandbox-fixture.json
+  schema_url: https://docs.tarx.com/samples/palantir-developer-sandbox/acme-systems-tarx-sandbox.schema.json
+  schema_file: json-schema/tarx-com-partner-sandbox-fixture-schema.json
+  schema_dialect: https://json-schema.org/draft/2020-12/schema
+  classification: synthetic_demo_data_no_customer_data_no_secrets
+  contents: [organization, users (3, example.invalid emails), spaces (Platform Engineering, AI Coding Budget Review, Security Review), runs, activity, evidence, task_packets, limitations]
+read_paths_documented:
+  paths:
+  - /api/channel/bootstrap
+  - /api/spaces
+  - /api/spaces/{id}/context
+  - /api/evidence
+  - /api/activity
+  note: Authenticated product API paths named in prose for the sandbox account; no base URL, schema or OpenAPI is published for them and they are not probed here.
+access_flow:
+- TARX creates or designates a sandbox developer account.
+- TARX seeds only synthetic sample data, or gives the partner the fixture to load into their own mock environment.
+- Partner signs in through the normal TARX auth flow (email magic link).
+- Partner calls read paths first; write paths remain approval-gated.
+reset_and_reseed:
+- {action: Read sample fixture, who: Partner, state: Available now}
+- {action: Load sample data into a demo account, who: TARX operator, state: Manual / approval required}
+- {action: Reset sandbox account, who: TARX operator, state: Manual / approval required}
+- {action: Partner self-service reseed, who: Partner, state: Not available}
+- {action: Production data import, who: Nobody, state: Blocked}
+limitations_stated:
+- Hosted Supercomputer use is approval-gated and must show route evidence.
+- Local/private context is not exposed through public remote MCP by default.
+- Webhook delivery is not live unless a separate approved event contract exists.
+- Write, execute, deploy, send, purchase, delete, and external-system calls require explicit approval and proof.

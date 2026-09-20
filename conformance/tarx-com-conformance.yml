@@ -1,0 +1,105 @@
+generated: '2026-09-19'
+method: probed
+source: live probes of mcp.tarx.com, api.tarx.com, tarx.com and docs.tarx.com on 2026-09-19; provider docs cited per entry
+note: >-
+  TARX publishes no OpenAPI, so every entry below is asserted from a fetched discovery document or an
+  observed response, never from a spec. Domain-standard signature for this market (agent runtimes):
+  MCP 2025-06-18 over streamable HTTP, an A2A 0.3.0 agent card, and an OpenAI-compatible
+  chat-completions surface — all three are declared by the provider's own contracts.
+conformance:
+- id: mcp
+  standard: Model Context Protocol (2025-06-18)
+  conforms: true
+  evidence: "POST initialize at https://mcp.tarx.com/mcp returned protocolVersion \"2025-06-18\", serverInfo {name: tarx, version: 3.18.0} and tools/prompts/resources capabilities; tools/list returned 22 tools with JSON Schema inputSchema and MCP tool annotations (readOnlyHint, idempotentHint, openWorldHint). Streamable HTTP transport (406 \"Client must accept text/event-stream\" on a GET without the Accept header; CORS exposes mcp-session-id)."
+  domain_standard: true
+- id: a2a
+  standard: A2A agent card (protocolVersion 0.3.0, graded against 1.0.0)
+  conforms: true
+  grade: conformant (structure) — see a2a/tarx-com-a2a.yml deviations; the declared url is an MCP endpoint that rejects A2A methods
+  evidence: https://tarx.com/.well-known/agent-card.json (200, JSON object; capabilities object, protocolVersion, skills array)
+  domain_standard: true
+- id: openai-compatible-api
+  standard: OpenAI Chat Completions / Models wire format (de facto)
+  conforms: true
+  evidence: GET https://api.tarx.com/v1/models returns {"object":"list","data":[{"id":"t-supercomputer","object":"model","owned_by":"tarx", ...}]}; POST /v1/chat/completions uses the OpenAI request shape (docs.tarx.com/developers/api) and the OpenAI error envelope {"error":{"message","type","param","code"}} with an extra request_id; the model is also published as OpenRouter slug tarx/t-supercomputer.
+  domain_standard: true
+- id: oauth2
+  standard: OAuth 2.0 authorization code
+  conforms: true
+  evidence: https://mcp.tarx.com/.well-known/oauth-authorization-server — grant_types_supported [authorization_code], response_types_supported [code]
+- id: rfc8414
+  standard: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  evidence: Same document; issuer https://mcp.tarx.com, authorization_endpoint, token_endpoint, scopes_supported, code_challenge_methods_supported all present.
+- id: rfc9728
+  standard: OAuth 2.0 Protected Resource Metadata
+  conforms: true
+  evidence: https://mcp.tarx.com/.well-known/oauth-protected-resource — resource https://mcp.tarx.com/mcp, authorization_servers, bearer_methods_supported [header], scopes_supported, resource_documentation.
+- id: pkce
+  standard: RFC 7636 PKCE
+  conforms: true
+  evidence: code_challenge_methods_supported [S256]; token_endpoint_auth_methods_supported [none] (public client).
+- id: rfc7591
+  standard: OAuth 2.0 Dynamic Client Registration
+  conforms: false
+  evidence: No registration_endpoint in the AS metadata; https://mcp.tarx.com/register returned 404. MCP clients must be pre-registered out of band.
+- id: oidc
+  standard: OpenID Connect Discovery
+  conforms: false
+  evidence: https://mcp.tarx.com/.well-known/openid-configuration 404 (JSON not_found); tarx.com, www, docs, api 404/530.
+- id: rfc9116
+  standard: security.txt
+  conforms: false
+  evidence: /.well-known/security.txt and /security.txt 404 on tarx.com, www.tarx.com, mcp.tarx.com, docs.tarx.com, hq.tarx.com; 530 on api.tarx.com; login-shell on howdy/cli/app. Disclosure contact is published only as prose (security/tarx-com-vulnerability-disclosure.yml).
+- id: rfc9727
+  standard: api-catalog (RFC 9727)
+  conforms: false
+  evidence: /.well-known/api-catalog 404 on every host.
+- id: rfc8615-well-known
+  standard: RFC 8615 well-known URIs
+  conforms: true
+  evidence: Provider serves agent-card.json, agent.json, oauth-authorization-server, oauth-protected-resource, ai-plugin.json, mcp.json and we.txt under /.well-known/ (well-known/tarx-com-well-known.yml).
+- id: openapi
+  standard: OpenAPI
+  conforms: false
+  evidence: >-
+    No spec found: tarx.com, docs.tarx.com, mcp.tarx.com /openapi.json|.yaml|swagger.json|api-docs|docs|redoc all 404;
+    api.tarx.com/v1/openapi.json is a JSON 404 ("Unknown endpoint") and every non-/v1 path on api.tarx.com is a
+    Cloudflare 530; GitHub org tarx-ai has no OpenAPI file in its first-party repos. ai-plugin.json declares
+    api.type "openapi" at https://mcp.tarx.com/openai-tools, but that URL serves an OpenAI function-calling tool
+    export ({"name","version","privacy","tools":[{"type":"function",...}]}), not an OpenAPI document.
+- id: llms-txt
+  standard: llms.txt
+  conforms: true
+  evidence: https://tarx.com/llms.txt, https://docs.tarx.com/llms.txt and https://howdy.tarx.com/llms.txt (200, text/plain) — three different documents saved under llms/.
+- id: rfc9457
+  standard: RFC 9457 Problem Details
+  conforms: false
+  evidence: api.tarx.com errors are OpenAI-envelope JSON (application/json), not application/problem+json; MCP errors are JSON-RPC 2.0.
+- id: json-rpc-2.0
+  standard: JSON-RPC 2.0
+  conforms: true
+  evidence: MCP endpoint answers well-formed JSON-RPC 2.0 results and errors (-32000, -32601).
+- id: json-schema-2020-12
+  standard: JSON Schema 2020-12
+  conforms: true
+  evidence: https://docs.tarx.com/samples/palantir-developer-sandbox/acme-systems-tarx-sandbox.schema.json declares $schema https://json-schema.org/draft/2020-12/schema (saved to json-schema/); MCP inputSchemas declare draft-07.
+- id: idempotency
+  standard: Idempotency-Key / replay protection
+  conforms: false
+  evidence: "No idempotency header is documented for api.tarx.com or tarx.com/api. MCP read tools carry idempotentHint: true (provider annotation), write tools do not."
+- id: pagination
+  standard: Documented pagination convention
+  conforms: false
+  evidence: Only a `limit` (1-20) argument on the MCP search tool; no cursor/offset convention is published for any REST surface.
+- id: webhooks
+  standard: Webhook / event surface
+  conforms: false
+  evidence: docs.tarx.com/developers/partner-sandbox — "No partner webhook contract is documented as live."
+compliance_claims:
+  certifications: []
+  note: >-
+    No SOC 2 / ISO 27001 / HIPAA / FedRAMP claim is published. docs.tarx.com/enterprise/* and
+    /government/* describe evaluation paths ("Enterprise evaluation", "Government evaluation") and
+    explicitly say "Do not claim private or government deployment without proof." No Compliance
+    pointer is emitted.

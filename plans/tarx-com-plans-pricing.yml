@@ -1,0 +1,66 @@
+generated: '2026-09-19'
+method: searched
+source: https://docs.tarx.com/pricing/overview (+ /pricing/computer, /pricing/supercomputer, /pricing/power-bundles, /pricing/enterprise, /pricing/byo-cloud-and-models), https://tarx.com/ (monthly planning widget), https://tarx.com/shop/compare, https://tarx.com/about
+currency: USD
+plan_count: 6
+note: >-
+  Software is free; the priced products are hardware. tarx.com/pricing 308-redirects to /shop (the
+  hardware store). docs.tarx.com publishes the capacity tiers as status labels without prices — the
+  only software price points on any page are the homepage planning widget's "$0 /mo for TARX_OS" and
+  "Attach a T-4 T-7 T-70 at $183/mo when the work needs more", and hardware "From $" prices on
+  /shop/compare. Enterprise pricing "depends on deployment path..." and is by agreement.
+plans:
+- name: Computer (TARX_OS / TARX Desktop / CLI)
+  price: 0
+  currency: USD
+  billing_period: null
+  status_label: Available now
+  included: [Local runtime, Spaces, Memory, Vault boundary, local OpenAI-compatible API, local MCP]
+  quota: 'Unlimited local use ("Free private AI software. Unlimited local use. No consumer seat or subscription." — tarx.com; "TARX is free forever. On the devices you own today." — tarx.com/about)'
+  requirements: 'macOS 14+, Apple Silicon (M1+), 8 GB RAM minimum / 16 GB recommended, 5 GB free (cli.tarx.com/download); Windows/iOS/Android "get notified" only'
+  source: https://docs.tarx.com/pricing/computer
+- name: TARX-managed hosted capacity (Supercomputer)
+  price: null
+  currency: USD
+  billing_period: null
+  status_label: Pilot-ready
+  included: [Longer-running approved jobs, More compute headroom, t-supercomputer model via api.tarx.com/v1]
+  quota: null
+  note: '"It is not a consumer subscription." (tarx.com) "Production Supercomputer capacity is being qualified." (llms.txt). Requires a TARX key enabled per account; no price published.'
+  source: https://docs.tarx.com/pricing/supercomputer
+- name: Power Bundles
+  price: null
+  currency: USD
+  billing_period: null
+  status_label: Pilot-ready
+  included: ['Predictable capacity beyond allowance or contribution']
+  quota: null
+  note: '"extra Supercomputer access when the Computer is not enough" — docs.tarx.com/reference/contact; no price published.'
+  source: https://docs.tarx.com/pricing/power-bundles
+- name: Black Box attach (T-4 / T-7 / T-70 shared box)
+  price: 183
+  currency: USD
+  billing_period: month
+  status_label: null
+  included: ['Dedicated NVIDIA capacity shared by a team ("About 1-25 people can share one T-4")']
+  quota: null
+  note: Homepage planning widget only ("Attach a T-4 T-7 T-70 at $183/mo when the work needs more"); the shop lists purchase prices instead — T-1 from $3,499, T-4 from $6,600, T-7 from $12,000, T-70 from $16,000 (tarx.com/shop/compare).
+  source: https://tarx.com/
+- name: BYO cloud / provider agreements; Private runtime; Approved open-source models
+  price: null
+  currency: USD
+  billing_period: null
+  status_label: Enterprise evaluation / Government evaluation
+  included: []
+  quota: null
+  source: https://docs.tarx.com/pricing/byo-cloud-and-models
+- name: Enterprise
+  price: null
+  currency: USD
+  billing_period: null
+  status_label: Enterprise evaluation
+  included: [Enterprise Runtime, governed routing, evidence trail, deployment control, MDM rollout support]
+  quota: null
+  contact: enterprise@tarx.com
+  note: '"Pricing, availability, final configuration, performance, support, and required certifications are established in a separate written agreement." (tarx.com/terms)'
+  source: https://docs.tarx.com/pricing/enterprise

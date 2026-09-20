@@ -1,0 +1,48 @@
+# TARX
+
+Experimental directory for systems that choose to consume it.
+Google currently ignores llms.txt for Search ranking and generative-search eligibility.
+Canonical crawlable pages and https://tarx.com/sitemap.xml remain the source of truth.
+
+TARX is the last agent you need. Private. Always on. Yours.
+Free private AI software. Unlimited local use on hardware you already own.
+Give TARX superpowers: connect to the Supercomputer for web research, more skills, and bigger jobs with deeper models.
+People buy hardware for faster local work, dedicated capacity, or a private cluster.
+The Supercomputer is extra capability for TARX. It is not a box you buy.
+Join the Supercomputer. Or own Private Hardware.
+Private Hardware is Shop: Black Boxes (T-1, T-4, T-7, T-70) and Machines (T-600, T-K90).
+Two pairs of TARX-T-X-VISION ship with every robot. Additional units are by quote. T-X-WATCH is not a public SKU.
+The public download is not live. Join beta at https://tarx.com/join.
+Production Supercomputer capacity is being qualified. Hardware Rewards redemption is coming soon. Private clusters are coming soon.
+Howdy is a console preview, not a production domain.
+
+## Canonical public pages
+
+- Home: https://tarx.com/
+- Shop / Private Hardware: https://tarx.com/shop
+- Black Boxes: https://tarx.com/shop/black-boxes
+- Machines: https://tarx.com/shop/machines
+- Wearables: https://tarx.com/shop/wearables
+- Compare: https://tarx.com/shop/compare
+- T-1: https://tarx.com/shop/t-1
+- T-4: https://tarx.com/shop/t-4
+- T-7: https://tarx.com/shop/t-7
+- T-70: https://tarx.com/shop/t-70
+- T-600: https://tarx.com/shop/t-600
+- T-K90: https://tarx.com/shop/t-k90
+- Software / Join beta: https://tarx.com/join
+- Learn: https://tarx.com/learn
+- Supercomputer: https://tarx.com/supercomputer
+- For Developers: https://tarx.com/supercomputer/developers
+- API & Models: https://tarx.com/supercomputer/api
+- Contribute a Computer: https://tarx.com/supercomputer/contribute
+- Apps: https://tarx.com/apps
+- Solutions: https://tarx.com/solutions
+- Support: https://tarx.com/support
+- Join beta: https://tarx.com/join
+- Answers: https://tarx.com/answers
+- Dispatches: https://tarx.com/dispatches
+- Docs: https://docs.tarx.com
+- Public API: https://api.tarx.com/v1
+- Model: t-supercomputer
+- Provider path: tarx/t-supercomputer

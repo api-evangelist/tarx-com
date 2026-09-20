@@ -1,0 +1,17 @@
+generated: '2026-09-19'
+method: probed
+source: response headers of GET https://api.tarx.com/v1/models and POST https://api.tarx.com/v1/chat/completions (401), and https://mcp.tarx.com/mcp, on 2026-09-19; docs.tarx.com searched
+limit_count: 0
+limits: []
+headers:
+  declared: [Retry-After]
+  declared_via: 'Access-Control-Expose-Headers: X-Request-ID, Retry-After on api.tarx.com'
+  observed_on_unauthenticated_responses: []
+  exhaustion_status: null
+note: >-
+  No rate limits are documented anywhere on docs.tarx.com, howdy.tarx.com or tarx.com, and no
+  RateLimit-* / X-RateLimit-* header appears on the unauthenticated responses. The API does expose
+  Retry-After to browsers via CORS, which is the only runtime signal an agent can rely on; the
+  status code that accompanies it was not observed. The MCP search tool caps `limit` at 20 per call.
+  tarx.com/terms forbids "Abuse shared compute, scrape systems, or saturate shared capacity" without
+  stating a number. An honest zero.

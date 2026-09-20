@@ -1,0 +1,38 @@
+# TARX Docs
+
+TARX is an AI work system for controlled context, tools, memory, evidence, and runtime choice.
+
+## Core concepts
+
+- Spaces hold context for a body of work.
+- Chat does work using Space context.
+- Comms handles people, drafts, handoffs, and approvals.
+- Computer is the user's local machine and tools.
+- Control governs account, memory, Vault, apps, approvals, billing, and capacity.
+- Evidence shows what TARX used, changed, or decided.
+- Supercomputer is optional hosted capacity, not the default product path.
+
+## Adoption touchpoints
+
+- Getting Started: https://docs.tarx.com/users/overview
+- Connections: https://docs.tarx.com/developers/connections
+- MCP: https://docs.tarx.com/developers/mcp
+- Claude Desktop MCP: https://docs.tarx.com/developers/mcp-claude-desktop
+- OpenAI Agents MCP: https://docs.tarx.com/developers/mcp-openai-agents
+- API: https://docs.tarx.com/developers/api
+- Enterprise evaluation: https://docs.tarx.com/enterprise/evaluation
+- Provider and model strategy: https://docs.tarx.com/enterprise/provider-and-model-strategy
+- Usage and capacity: https://docs.tarx.com/pricing/overview
+
+## Capability status labels
+
+- Available now: the surface exists and can be used or reviewed today.
+- Pilot-ready: suitable for controlled evaluation or early account access.
+- Enterprise evaluation: requires enterprise review, agreement, or implementation planning.
+- Government evaluation: requires public-sector review, approval path, or implementation planning.
+- Roadmap: directional, not available for use.
+
+## Contact
+
+Email: howdy@tarx.com
+Slack: https://join.slack.com/t/tarxxxxx/shared_invite/zt-2aphbjypj-IrWza6yDP3oL8yxfYy4gPA

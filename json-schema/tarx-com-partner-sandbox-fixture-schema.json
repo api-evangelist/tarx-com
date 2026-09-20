@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://docs.tarx.com/samples/palantir-developer-sandbox/acme-systems-tarx-sandbox.schema.json",
+  "title": "TARX Partner Sandbox Fixture",
+  "type": "object",
+  "required": ["fixture_id", "sample_only", "organization", "users", "spaces", "runs", "activity", "evidence", "task_packets", "limitations"],
+  "properties": {
+    "fixture_id": { "type": "string" },
+    "sample_only": { "const": true },
+    "classification": { "type": "string" },
+    "organization": {
+      "type": "object",
+      "required": ["id", "name", "industry", "environment"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "industry": { "type": "string" },
+        "environment": { "type": "string" }
+      }
+    },
+    "users": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/user" }
+    },
+    "spaces": {
+      "type": "array",
+      "minItems": 3,
+      "items": { "$ref": "#/$defs/space" }
+    },
+    "runs": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/run" }
+    },
+    "activity": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/activity" }
+    },
+    "evidence": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidence" }
+    },
+    "task_packets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/taskPacket" }
+    },
+    "limitations": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "user": {
+      "type": "object",
+      "required": ["id", "name", "role", "email", "sample_only"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "email": { "type": "string" },
+        "sample_only": { "const": true }
+      }
+    },
+    "space": {
+      "type": "object",
+      "required": ["id", "name", "description", "category", "labels", "summary", "context_doc", "space_wiki", "blockers", "qa"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "category": { "type": "string" },
+        "labels": { "type": "array", "items": { "type": "string" } },
+        "summary": { "type": "string" },
+        "context_doc": { "$ref": "#/$defs/contextDoc" },
+        "space_wiki": { "$ref": "#/$defs/spaceWiki" },
+        "blockers": { "type": "array", "items": { "$ref": "#/$defs/blocker" } },
+        "qa": { "type": "array", "items": { "$ref": "#/$defs/qa" } }
+      }
+    },
+    "contextDoc": {
+      "type": "object",
+      "required": ["id", "name", "mime", "source", "content"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "mime": { "type": "string" },
+        "source": { "type": "string" },
+        "content": { "type": "string" }
+      }
+    },
+    "spaceWiki": {
+      "type": "object",
+      "required": ["id", "generated_from", "status", "sections"],
+      "properties": {
+        "id": { "type": "string" },
+        "generated_from": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string" },
+        "sections": { "type": "array", "items": { "$ref": "#/$defs/wikiSection" } }
+      }
+    },
+    "wikiSection": {
+      "type": "object",
+      "required": ["title", "body"],
+      "properties": {
+        "title": { "type": "string" },
+        "body": { "type": "string" }
+      }
+    },
+    "blocker": {
+      "type": "object",
+      "required": ["id", "severity", "summary", "first_blocker", "status"],
+      "properties": {
+        "id": { "type": "string" },
+        "severity": { "type": "string" },
+        "summary": { "type": "string" },
+        "first_blocker": { "type": "boolean" },
+        "status": { "type": "string" }
+      }
+    },
+    "qa": {
+      "type": "object",
+      "required": ["id", "name", "status", "evidence_id"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "status": { "type": "string" },
+        "evidence_id": { "type": "string" }
+      }
+    },
+    "run": {
+      "type": "object",
+      "required": ["id", "space_id", "owner", "current_task", "status", "runtime_or_model", "handoff_target", "evidence_ids", "recent_history", "sample_only"],
+      "properties": {
+        "id": { "type": "string" },
+        "space_id": { "type": "string" },
+        "owner": { "type": "string" },
+        "current_task": { "type": "string" },
+        "status": { "type": "string" },
+        "runtime_or_model": { "type": "string" },
+        "handoff_target": { "type": "string" },
+        "evidence_ids": { "type": "array", "items": { "type": "string" } },
+        "recent_history": { "type": "array", "items": { "type": "string" } },
+        "sample_only": { "const": true }
+      }
+    },
+    "activity": {
+      "type": "object",
+      "required": ["id", "type", "message", "source", "status", "space", "ts", "meta"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "message": { "type": "string" },
+        "source": { "type": "string" },
+        "status": { "type": "string" },
+        "space": { "type": "string" },
+        "ts": { "type": "integer" },
+        "meta": { "type": "object" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["id", "createdAt", "actor", "surface", "action", "title", "summary", "status", "runtime", "risk", "permission"],
+      "properties": {
+        "id": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "actor": { "type": "string" },
+        "surface": { "type": "string" },
+        "action": { "type": "string" },
+        "title": { "type": "string" },
+        "summary": { "type": "string" },
+        "status": { "type": "string" },
+        "runtime": { "type": "string" },
+        "risk": { "type": "string" },
+        "permission": { "type": "string" },
+        "relatedSpaceId": { "type": "string" },
+        "relatedRunId": { "type": "string" },
+        "sources": { "type": "array", "items": { "type": "string" } },
+        "touched": { "type": "array", "items": { "type": "string" } },
+        "savedTo": { "type": "array", "items": { "type": "string" } },
+        "failures": { "type": "array", "items": { "type": "string" } },
+        "metadata": { "type": "object" }
+      }
+    },
+    "taskPacket": {
+      "type": "object",
+      "required": ["id", "space_id", "mode", "request", "status", "first_blocker_id", "evidence_id"],
+      "properties": {
+        "id": { "type": "string" },
+        "space_id": { "type": "string" },
+        "mode": { "type": "string" },
+        "request": { "type": "string" },
+        "status": { "type": "string" },
+        "first_blocker_id": { "type": "string" },
+        "evidence_id": { "type": "string" }
+      }
+    }
+  }
+}

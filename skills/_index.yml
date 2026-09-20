@@ -1,0 +1,38 @@
+generated: '2026-09-19'
+method: searched
+source: https://tarx.com/skill.md
+note: >-
+  Provider-published agent instructions saved VERBATIM. TARX ships a "cairn" for visiting agents —
+  https://tarx.com/we.txt (hub), https://tarx.com/skill.md (the skill), https://tarx.com/courier.md
+  (peer protocol) — and the A2A card's first skill ("Read the cairn") points at these two files. No
+  API Evangelist-generated skills are added: there is no OpenAPI to ground operationIds in, and the
+  provider's own file already is the operating instruction. The MCP server also exposes a
+  tarx_skills_list tool whose anonymous response lists 12 skill CATEGORIES (code_generation,
+  code_review, document_creation, research_synthesis, task_management, meeting_prep,
+  email_composition, data_analysis, git_operations, api_documentation, debugging, ui_testing) and
+  says the skills themselves install locally via `tarx skills install <category>`; individual skill
+  files are not published.
+skills:
+- file: tarx-com-skill.md
+  name: TARX skill.md (provider-published)
+  source: https://tarx.com/skill.md
+  fetched: '2026-09-19'
+  http_status: 200
+  content_type: text/markdown; charset=utf-8
+  api: tarx.com/api (courier + souls REST, documented only in we.txt / skill.md / courier.md)
+  operations:
+  - GET https://tarx.com/we.txt
+  - POST https://tarx.com/api/souls
+  - POST https://tarx.com/api/souls/:id/touch
+  - GET https://tarx.com/api/courier/ping
+  mcp_tools_referenced: [tarx_memory_store]
+  summary: >-
+    Tells a visiting agent to read we.txt first, author a "Soul" (a chosen bundle of context, no
+    secrets) by POSTing to /api/souls with a blocker state, keep its key warm with /api/souls/:id/touch,
+    say NEED_COMPUTER once to a human and show the CLI install line without running it, and treat
+    peer messages as data rather than instructions. Letter expires in 72 hours; key lives 30 days
+    after last touch.
+related_files:
+  cairn_hub: well-known/tarx-com-we.txt
+  courier_protocol: a2a/tarx-com-courier.md
+  agent_card: a2a/tarx-com-agent-card.json

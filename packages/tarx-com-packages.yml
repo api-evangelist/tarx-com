@@ -1,0 +1,77 @@
+generated: '2026-09-19'
+method: searched
+source: GitHub releases API for tarx-ai/*, registry.npmjs.org, pypi.org, crates.io, formulae.brew.sh (2026-09-19)
+note: >-
+  TARX publishes no client SDK on any package registry. npm search for "tarx" and scope:tarx returned
+  zero first-party packages, PyPI has no tarx / tarx-cli / tarx-mcp, crates.io has no tarx crate and
+  Homebrew has no tarx formula. Distribution is a curl|sh installer plus GitHub Releases. The
+  packages below are the CLI, the desktop app and the OS build — operator tooling, not API client
+  libraries — so no SDKs pointer is emitted. The docs' `npx @tarx/mcp` local-MCP command names an
+  npm package that does not exist on the registry (404), recorded here as the honest gap.
+packages:
+- language: shell
+  registry: github-releases
+  name: tarx-cli
+  url: https://github.com/tarx-ai/tarx-cli
+  install: curl -fsSL cli.tarx.com/install | sh
+  official: true
+  version: v1.1.0
+  published: '2026-03-13'
+  assets: [tarx-core-bundle.tar.gz, tarx-ops-bundle.tar.gz]
+  note: >-
+    POSIX shell CLI (1,340 lines, tarx-ai/tarx-cli/main/tarx) — the local control plane. The installer
+    script (served to a curl User-Agent from cli.tarx.com/install) fetches the tarx script from
+    raw.githubusercontent.com/tarx-ai/tarx-cli/main/tarx and the two MCP server bundles from the
+    release assets. Last release predates the current 3.18.0 remote MCP server by six months; the
+    repo's last push is 2026-09-06.
+- language: javascript
+  registry: github-releases
+  name: tarx-desktop
+  url: https://github.com/tarx-ai/tarx-desktop
+  install: Download the signed DMG from https://github.com/tarx-ai/tarx-desktop/releases (tarx.com/download redirects to /join)
+  official: true
+  version: v1.1.13
+  published: '2026-07-29'
+  assets: [TARX-1.1.13-arm64.dmg, TARX-1.1.13-arm64-mac.zip, SHA256SUMS-1.1.13.txt]
+  note: Electron Mac app, Apple Silicon only, Developer ID signed + notarized per README. License UNLICENSED/proprietary. cli.tarx.com/download offers 1.1.12 RC.
+- language: null
+  registry: github-releases
+  name: tarx-os-releases
+  url: https://github.com/tarx-ai/tarx-os-releases
+  install: Download TARX-OS-<version>-arm64.dmg from the GitHub release
+  official: true
+  version: v1.0.0-beta.9
+  published: '2026-08-27'
+  assets: [TARX-OS-1.0.0-beta.9-arm64.dmg, TARX-OS-1.0.0-beta.9-arm64.zip, SHA256SUMS-1.0.0-beta.9.txt, latest-mac.yml, candidate-mac.yml]
+  note: Public GitHub Releases feed for com.tarx.os; source is private per the repo description.
+- language: javascript
+  registry: npm
+  name: "@tarx/mcp"
+  url: https://www.npmjs.com/package/@tarx/mcp
+  install: npx @tarx/mcp
+  official: true
+  version: null
+  published: null
+  note: >-
+    Documented at https://docs.tarx.com/developers/mcp and /developers/mcp-claude-desktop as the local
+    MCP server command, but https://registry.npmjs.org/@tarx%2Fmcp returned 404 on 2026-09-19 — the
+    package is not published.
+- language: typescript
+  registry: github
+  name: tarx-examples
+  url: https://github.com/tarx-ai/tarx-examples
+  install: git clone https://github.com/tarx-ai/tarx-examples
+  official: true
+  version: null
+  published: null
+  note: >-
+    "Public, evidence-labeled TARX integration patterns" — a framework-neutral adapter contract
+    (src/integration-adapter.ts) plus Eve/Vercel Connect channel recipes. Not a versioned release;
+    last push 2026-08-03. Its docs/architecture.md proposes GET /v1/integrations,
+    GET /v1/integrations/{id}/tools and POST /v1/integrations/{id}/tools/{tool} and says
+    "This repository does not claim those routes are publicly deployed."
+models:
+- registry: huggingface
+  org: https://huggingface.co/Tarxxxxxx
+  items: [Tarxxxxxx/TX-8G, Tarxxxxxx/TX-12G, Tarxxxxxx/TX-16G, Tarxxxxxx/TX-M-72B, Tarxxxxxx/TX-VOICE, Tarxxxxxx/tarx-qwen2.5-7b-deep, Tarxxxxxx/tarx-v3, Tarxxxxxx/tarx-private-ai-gateway]
+  note: Model weights linked from tarx.com's footer ("Hugging Face"); listed for completeness, not client libraries.

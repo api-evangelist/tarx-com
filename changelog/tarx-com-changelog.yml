@@ -1,0 +1,50 @@
+generated: '2026-09-19'
+method: searched
+source: https://docs.tarx.com/reference/changelog + GitHub Releases (tarx-ai/tarx-os-releases, tarx-ai/tarx-desktop, tarx-ai/tarx-cli)
+scheme: Dated docs changelog (one entry) plus semver GitHub release tags per component; no API changelog.
+current_versions:
+  remote_mcp_server: 3.18.0 (initialize, 2026-09-19)
+  tarx_os: v1.0.0-beta.9
+  tarx_desktop: v1.1.13 (cli.tarx.com/download offers 1.1.12 RC)
+  tarx_cli: v1.1.0
+  api: v1 (path)
+entries:
+- date: '2026-09-17'
+  component: tarx-robotics (GitHub)
+  kind: repository activity
+  highlights: [Latest push in the tarx-ai org — "TARX robotics beachhead: Unitree H2 Plus + NVIDIA Isaac GR00T integration".]
+- date: '2026-09-07'
+  component: we-txt (GitHub)
+  kind: additions
+  highlights: [Public mirror of we.txt / skill.md / agent-card.json created; we.txt version 1.4 live on tarx.com.]
+- date: '2026-08-27'
+  component: TARX-OS
+  version: v1.0.0-beta.9
+  kind: release
+  breaking: false
+  highlights: [arm64 DMG + zip with SHA256SUMS; latest-mac.yml / candidate-mac.yml update feeds.]
+- date: '2026-08-07'
+  component: Dispatches (blog)
+  kind: content
+  highlights: ['"Computing Is Becoming Ambient" (tarx.substack.com / tarx.com/dispatches).']
+- date: '2026-07-29'
+  component: TARX Desktop
+  version: v1.1.13
+  kind: release
+  breaking: false
+  highlights: [Signed + notarized arm64 DMG and zip.]
+- date: '2026-05-20'
+  component: docs.tarx.com
+  kind: additions
+  breaking: false
+  highlights: ['"Docs IA moved to audience-first sections for Users, Developers, Enterprise, Government, Pricing & Capacity, and Reference." (the only entry on the provider changelog page); Terms and Privacy pages dated the same day.']
+- date: '2026-03-13'
+  component: TARX CLI
+  version: v1.1.0
+  kind: release
+  breaking: false
+  highlights: [tarx-core-bundle.tar.gz and tarx-ops-bundle.tar.gz MCP server bundles.]
+note: >-
+  The provider's own changelog carries a single dated entry and says "Public changelog entries will
+  track meaningful docs and product surface updates." Component releases above are read from the
+  GitHub Releases API. No changelog exists for the remote MCP server or api.tarx.com.

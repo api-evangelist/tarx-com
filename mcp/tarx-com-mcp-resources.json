@@ -1,0 +1,38 @@
+{
+  "result": {
+    "resources": [
+      {
+        "uri": "tarx://prompts/session-start",
+        "name": "session-brief",
+        "description": "Live session brief \u2014 tools, protocol, identity.",
+        "mimeType": "text/plain"
+      },
+      {
+        "uri": "tarx://system/architecture",
+        "name": "architecture",
+        "description": "TARX public-safe system architecture and route boundaries.",
+        "mimeType": "application/json"
+      },
+      {
+        "uri": "tarx://system/tools",
+        "name": "tool-inventory",
+        "description": "TARX approved MCP capability boundary. Exact local inventory requires local install/auth/permission.",
+        "mimeType": "application/json"
+      },
+      {
+        "uri": "tarx://system/deploy",
+        "name": "deploy-config",
+        "description": "Deployment configuration \u2014 Vercel projects, domains.",
+        "mimeType": "application/json"
+      },
+      {
+        "uri": "tarx://system/protocol",
+        "name": "protocol",
+        "description": "Session protocol \u2014 rules for Claude sessions using TARX.",
+        "mimeType": "application/json"
+      }
+    ]
+  },
+  "jsonrpc": "2.0",
+  "id": 1
+}

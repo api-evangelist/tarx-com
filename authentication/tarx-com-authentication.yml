@@ -1,0 +1,64 @@
+generated: '2026-09-19'
+method: probed
+source: https://mcp.tarx.com/.well-known/oauth-authorization-server + https://mcp.tarx.com/.well-known/oauth-protected-resource + unauthenticated calls to api.tarx.com/v1 and mcp.tarx.com/mcp (2026-09-19)
+docs: https://docs.tarx.com/developers/api
+note: >-
+  No OpenAPI declares securitySchemes, so this profile is built from the provider's published OAuth
+  metadata and from observed unauthenticated responses. Three surfaces, three models.
+schemes:
+- id: mcp_oauth2
+  surface: https://mcp.tarx.com/mcp
+  type: oauth2
+  flow: authorization_code
+  pkce: S256 (code_challenge_methods_supported)
+  client_type: "public (token_endpoint_auth_methods_supported: [none])"
+  issuer: https://mcp.tarx.com
+  authorization_endpoint: https://mcp.tarx.com/oauth/authorize
+  token_endpoint: https://mcp.tarx.com/oauth/token
+  registration_endpoint: null
+  dynamic_client_registration: false
+  scopes: [public, user, chatgpt_private_memory]
+  bearer_methods_supported: [header]
+  resource: https://mcp.tarx.com/mcp
+  metadata:
+    rfc8414: well-known/tarx-com-oauth-authorization-server.json
+    rfc9728: well-known/tarx-com-oauth-protected-resource.json
+  anonymous_access: >-
+    Optional for the public-safe subset. initialize, tools/list, prompts/list, resources/list,
+    resources/read (tarx://system/*) and read-only tools such as tarx_status and tarx_skills_list
+    succeed with no credential. tarx_memory_search without a token returns a 200 tool result whose
+    content is {"error":"Authentication required for private memory reads. Provide a Bearer token."}
+    (no 401, no WWW-Authenticate — the challenge is inside the tool payload, which an MCP client's
+    OAuth discovery will not see). The provider's mcp.json says auth.required: false, "Public context
+    tools work without auth. Private memory reads and writes require OAuth/Bearer auth."
+  evidence:
+  - {url: https://mcp.tarx.com/oauth/authorize, method: GET, http_status: 400, body: '{"error":"invalid_request","error_description":"missing redirect_uri"}', note: live authorization endpoint}
+  - {url: https://mcp.tarx.com/register, http_status: 404, note: 'no DCR endpoint, consistent with the metadata'}
+  - {url: https://mcp.tarx.com/.well-known/openid-configuration, http_status: 404, note: 'OAuth 2.0 only, not OIDC'}
+- id: api_key_bearer
+  surface: https://api.tarx.com/v1
+  type: http
+  scheme: bearer
+  header: Authorization
+  key_name: TARX API key ("a TARX key and execution policy are enabled for the account" — docs.tarx.com/developers/api)
+  key_prefix: null
+  obtain: Not self-serve; docs describe hosted capacity as Pilot-ready with keys enabled per account. No key-management page was found.
+  additional_headers_allowed: [X-Request-ID, X-TARX-Lease-Token]
+  anonymous_access: GET /v1/models answers 200 without a key; POST /v1/chat/completions without a key answers 401.
+  error_on_missing: '401 {"error":{"message":"Authentication required.","type":"authentication_error","param":null,"code":"tarx_api_key_required"},"request_id":"req_..."}'
+  evidence:
+  - {url: https://api.tarx.com/v1/models, method: GET, http_status: 200}
+  - {url: https://api.tarx.com/v1/chat/completions, method: POST, http_status: 401, error_code: tarx_api_key_required}
+- id: courier_open
+  surface: https://tarx.com/api (courier / souls / census)
+  type: none
+  note: >-
+    GET /api/courier/ping, /api/courier/tick and /api/rail/census answer 200 with no credential.
+    POST /api/souls and /api/souls/:id/touch are documented in skill.md with a JSON body and no auth
+    field; GET /api/souls returns 405 (method not allowed). No POST was sent (it creates a record).
+account_identity:
+  method: email magic link
+  source: https://tarx.com/terms ("You sign in with an email magic link. The email address you provide is the canonical identity for your account.")
+local_runtime:
+  surface: http://127.0.0.1:11440
+  note: The local OpenAI-compatible route and local MCP need no key ("No account. No API key." — howdy.tarx.com); out of scope for a public profile but recorded because the docs' primary examples target it.

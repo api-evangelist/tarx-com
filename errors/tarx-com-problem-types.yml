@@ -1,0 +1,62 @@
+generated: '2026-09-19'
+method: probed
+source: unauthenticated responses from https://api.tarx.com/v1 and https://mcp.tarx.com/mcp on 2026-09-19
+format: openai-error-envelope
+note: >-
+  No error reference page exists on docs.tarx.com (the Palantir readiness page lists "error/state
+  tables" as a gap the provider itself acknowledges). Every entry below is an error actually
+  observed; titles are the provider's own strings. Not RFC 9457.
+envelope:
+  api_tarx_com: '{"error":{"message":<string>,"type":<string>,"param":<string|null>,"code":<string>},"request_id":"req_<uuid>"}'
+  mcp_tarx_com: 'JSON-RPC 2.0 {"jsonrpc":"2.0","error":{"code":<int>,"message":<string>},"id":<id>}; tool-level errors arrive as a 200 result whose content[0].text is a JSON object with an "error" string'
+  request_id_header: X-Request-ID (also echoed in the body as request_id)
+problem_types:
+- surface: api.tarx.com
+  status: 401
+  type: authentication_error
+  code: tarx_api_key_required
+  title: Authentication required.
+  observed_on: POST /v1/chat/completions without Authorization
+  remediation: "Send `Authorization: Bearer <TARX key>`; keys are enabled per account (docs.tarx.com/developers/api) and are not self-serve."
+- surface: api.tarx.com
+  status: 404
+  type: invalid_request_error
+  code: not_found
+  title: 'Unknown endpoint: GET /v1'
+  observed_on: GET /v1, GET /v1/openapi.json
+  remediation: Only /v1/models and /v1/chat/completions are documented.
+- surface: api.tarx.com
+  status: 530
+  type: cloudflare-origin-error
+  code: null
+  title: Cloudflare 530 (HTML)
+  observed_on: every path outside /v1 (/, /openapi.json, /docs, /.well-known/*)
+  remediation: Use the /v1 prefix; nothing else is routed to the origin.
+- surface: mcp.tarx.com
+  status: 406
+  type: json-rpc
+  code: -32000
+  title: 'Not Acceptable: Client must accept text/event-stream'
+  observed_on: "GET /mcp without `Accept: application/json, text/event-stream`"
+  remediation: Send both Accept values; the server speaks streamable HTTP.
+- surface: mcp.tarx.com
+  status: 200
+  type: json-rpc
+  code: -32601
+  title: Method not found
+  observed_on: POST tasks/get (an A2A method) to /mcp
+  remediation: The endpoint is MCP only; use MCP methods.
+- surface: mcp.tarx.com
+  status: 200
+  type: tool-result-error
+  code: null
+  title: Authentication required for private memory reads. Provide a Bearer token.
+  observed_on: tools/call tarx_memory_search without a bearer token
+  remediation: Complete the OAuth authorization_code + PKCE flow against https://mcp.tarx.com (scopes user / chatgpt_private_memory) and retry with a Bearer token.
+- surface: tarx.com/api
+  status: 405
+  type: method-not-allowed
+  code: null
+  title: Method Not Allowed
+  observed_on: GET /api/souls
+  remediation: The souls endpoint is POST-only (skill.md).

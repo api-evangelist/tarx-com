@@ -1,0 +1,1 @@
+{"resource":"https://mcp.tarx.com/mcp","authorization_servers":["https://mcp.tarx.com"],"bearer_methods_supported":["header"],"scopes_supported":["public","user","chatgpt_private_memory"],"logo_uri":"https://mcp.tarx.com/tarx-desktop-icon.png","icon_uri":"https://mcp.tarx.com/tarx-desktop-icon.png","resource_documentation":"https://howdy.tarx.com/mcp"}
