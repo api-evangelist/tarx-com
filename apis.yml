@@ -1,5 +1,5 @@
 aid: tarx-com
-name: TARXAN Inc
+name: TARXAN
 description: >-
   TARXAN Inc (TARX, Austin TX) builds a local-first AI agent runtime: free TARX_OS / TARX Desktop
   software for Apple Silicon Macs, a shell CLI that installs a local inference daemon and local MCP
@@ -222,3 +222,4 @@ x-enrichment:
   status: enriched
   artifacts_added: 36
   pass: local-v3
+x-legal-name: TARXAN Inc
