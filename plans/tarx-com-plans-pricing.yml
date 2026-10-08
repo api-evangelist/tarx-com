@@ -64,3 +64,47 @@ plans:
   contact: enterprise@tarx.com
   note: '"Pricing, availability, final configuration, performance, support, and required certifications are established in a separate written agreement." (tarx.com/terms)'
   source: https://docs.tarx.com/pricing/enterprise
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Computer (TARX_OS / TARX Desktop / CLI)
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: TARX-managed hosted capacity (Supercomputer)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Power Bundles
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Black Box attach (T-4 / T-7 / T-70 shared box)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: BYO cloud / provider agreements; Private runtime; Approved open-source models
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
